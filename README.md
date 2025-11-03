@@ -1,5 +1,6 @@
 # DVS
-![Endpoint Badge](https://img.shields.io/endpoint?url=version.json)
+![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FVikHolger%2FDVS%2Frefs%2Fheads%2Fpublic%2Fversion.json)
+
 
 Digitala Verifikat system -  Ett enklare sett för sektionens medlemmar att fylla i och lämna in verifikat åt flygsektionen.
 
