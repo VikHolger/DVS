@@ -1,8 +1,17 @@
-import type { Template } from '@pdfme/common';
+import type { Template, Font } from '@pdfme/common';
 import { generate } from '@pdfme/generator';
 import { text, line, rectangle } from '@pdfme/schemas';
 import { template } from './pdfTemplate';
 
+const font: Font = {
+  serif: {
+    data: 'https://example.com/fonts/serif.ttf',
+    fallback: true,
+  },
+  sans_serif: {
+    data: 'https://example.com/fonts/sans_serif.ttf',
+  },
+};
 
 export function generatePDF(V_Type, name, date, myntCard, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition) {
     const inputs = [{ 
@@ -34,6 +43,7 @@ export function generatePDF(V_Type, name, date, myntCard, bankName, clearing, ba
             line,
             rectangle,
         }, 
+        options: { font }
         }).then((pdf) => {
     console.log(pdf);
 
