@@ -9,21 +9,56 @@ export default function Home() {
   const t = translations[language];
 
   const [name, setName] = useState("");
+  const [date, setDate] = useState("");
   const [V_Type, set_V_Type] = useState("");
 
   const [myntCard, setMyntCard] = useState("---");
 
   const [bankName, setBankName] = useState("");
   const [clearing, setClearing] = useState("");
-  const [bankNr, setBankNr] = useState("");
+  const [bankNum, setBankNr] = useState("");
 
   const [ammount, setAmmount] = useState("");
   const [numReceipts, setNumReceipts] = useState("");
   const [purchaseDate, setPurchaseDate] = useState(""); 
 
   const [budgetManager, setBudgetManager] = useState("");
-  const [project, setProject] = useState("");
+  const [projectNum, setProjectNum] = useState("");
   const [descrition, setDescrition] = useState("");
+
+  const [shouldSubmit, setShouldSubmit] = useState(false);
+
+
+  useEffect(() => {
+    if (shouldSubmit) {
+      submitForm();
+      setShouldSubmit(false);
+    }
+  }, [date, shouldSubmit]);
+
+  function submitForm() {
+    console.log("Submit Form!")
+    console.log(`Data:
+      Verifikats typ: ${V_Type}
+      
+      Name: ${name}
+      Datum ifyllt: ${date}
+      
+      MyntKort: ${myntCard}
+
+      Bank: ${bankName}
+      Clearing: ${clearing}
+      Kontonummer: ${bankNum}
+
+      Belopp: ${ammount}
+      Antal Kvitton: ${numReceipts}
+      Köp datumet: ${purchaseDate}
+
+      Budget Ansvar: ${budgetManager}
+      Projekt Nummer: ${projectNum}
+      Beskrivning: ${descrition}
+      `)
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black flex-col">
@@ -57,7 +92,7 @@ export default function Home() {
           {t.welcome}
         </p>
 
-        <div className='Form min-w-9/12 self-center item-center'>
+        <div className='Form flex flex-col min-w-9/12 self-center item-center'>
 
           <div className='flex flex-col items-center pt-5'>
             <input
@@ -102,9 +137,9 @@ export default function Home() {
                   className="px-4 py-2 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
                 >
                   <option value="---" hidden>---</option>
-                  <option value="option1">CASH</option>
-                  <option value="option2">KBM</option>
-                  <option value="option3">EKO</option>
+                  <option value="CASH">CASH</option>
+                  <option value="KBM">KBM</option>
+                  <option value="EKO">EKO</option>
                 </select>
               </div>
             </div>
@@ -142,7 +177,7 @@ export default function Home() {
                   <input
                     type="text"
                     maxLength={12}
-                    value={bankNr}
+                    value={bankNum}
                     onChange={(e) => {
                       if (/^\d*$/.test(e.target.value)) {
                         setBankNr(e.target.value);
@@ -157,7 +192,7 @@ export default function Home() {
             </div>
           )}
 
-          {((V_Type == "Mynt" && myntCard != "---") || (V_Type == "Privat" && clearing && bankNr)) && ( // Detaljer om köpet i sig
+          {((V_Type == "Mynt" && myntCard != "---") || (V_Type == "Privat" && clearing && bankNum)) && ( // Detaljer om köpet i sig
             <div className='min-w-full flex flex-col items-center justify-around m-2 py-2 border rounded-xl'>
               <p className='text-xl underline'>
                 {t.buyData}
@@ -234,8 +269,8 @@ export default function Home() {
               {budgetManager && budgetManager != "---" && (
                 <div>
                   <select 
-                    value={project} 
-                    onChange={(e) => setProject(e.target.value)}
+                    value={projectNum} 
+                    onChange={(e) => setProjectNum(e.target.value)}
                     className="px-4 py-2 mt-1 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
                   >
                     <option value="---" hidden>---</option>
@@ -248,7 +283,7 @@ export default function Home() {
                 </div>
               )}
 
-              {project && (
+              {projectNum && (
                 <textarea
                   value={descrition}
                   onChange={(e) => setDescrition(e.target.value)}
@@ -259,6 +294,19 @@ export default function Home() {
               )}
 
             </div>
+          )}
+
+          {descrition && (
+            <button
+              type="submit"
+              onClick={() => {
+                setDate(new Date().toISOString().split('T')[0]);
+                setShouldSubmit(true);
+              }}
+              className="mt-2 self-center bg-gray-700 hover:bg-gray-800 text-gray-400 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Submit
+            </button>
           )}
 
         </div>
