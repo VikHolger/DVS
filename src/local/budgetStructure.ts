@@ -1,0 +1,42 @@
+export const budgetManagers = [
+    { value: "Cash", label: "Cash" },
+    { value: "KBM", label: "KBM" },
+    { value: "EKO", label: "EKO" },
+    { value: "Lokal", label: "Lokal" },
+    { value: "Takeoff", label: "Takeoff" },
+    { value: "Farmen", label: "Farmen" },
+    { value: "Sture", label: "Sture" },
+    { value: "JMLNO", label: "JMLNO" },
+    { value: "Hexmestaren", label: "Sexmestaren" },
+    { value: "INFO", label: "INFO" },
+    { value: "Jubel", label: "Jubelcash" },
+];
+
+export const projectsMap = new Map([
+    ["Cash", [
+        { value: "104", labelKey: "pr_104" },
+        { value: "105", labelKey: "pr_105" },
+        { value: "106", labelKey: "pr_106" },
+        { value: "107", labelKey: "pr_107" },
+        { value: "111", labelKey: "pr_111" },
+        { value: "112", labelKey: "pr_112" },
+        { value: "113", labelKey: "pr_113" },
+        { value: "116", labelKey: "pr_116" },
+        { value: "117", labelKey: "pr_117" },
+        { value: "119", labelKey: "pr_119" },
+        { value: "123", labelKey: "pr_123" },
+        { value: "124", labelKey: "pr_124" },
+        { value: "125", labelKey: "pr_125" },
+        { value: "1xx", labelKey: "pr_1xx" },
+    ]],
+    ["KBM", [
+        { value: "201", labelKey: "pr_201" },
+        { value: "202", labelKey: "pr_202" },
+        { value: "204", labelKey: "pr_204" },
+        { value: "206", labelKey: "pr_206" },
+        { value: "224", labelKey: "pr_224" },
+        { value: "243", labelKey: "pr_243" },
+        { value: "251", labelKey: "pr_251" },
+        { value: "252", labelKey: "pr_252" },
+    ]],
+]);

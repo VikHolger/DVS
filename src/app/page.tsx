@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { translations, Language } from '@/local';
+import { budgetManagers, projectsMap } from '@/local/budgetStructure';
 
 export default function Home() {
   const [language, setLanguage] = useState<Language>("sv");
@@ -19,6 +20,10 @@ export default function Home() {
   const [ammount, setAmmount] = useState("");
   const [numReceipts, setNumReceipts] = useState("");
   const [purchaseDate, setPurchaseDate] = useState(""); 
+
+  const [budgetManager, setBudgetManager] = useState("");
+  const [project, setProject] = useState("");
+  const [descrition, setDescrition] = useState("");
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black flex-col">
@@ -96,7 +101,7 @@ export default function Home() {
                   onChange={(e) => setMyntCard(e.target.value)}
                   className="px-4 py-2 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
                 >
-                  <option value="---">---</option>
+                  <option value="---" hidden>---</option>
                   <option value="option1">CASH</option>
                   <option value="option2">KBM</option>
                   <option value="option3">EKO</option>
@@ -212,6 +217,46 @@ export default function Home() {
               <p className='text-xl underline'>
                 {t.buyUsage}
               </p>
+
+              <select 
+                value={budgetManager} 
+                onChange={(e) => setBudgetManager(e.target.value)}
+                className="px-4 py-2 mt-2 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
+              >
+                <option value="---" hidden>---</option>
+                {budgetManagers.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+
+              {budgetManager && budgetManager != "---" && (
+                <div>
+                  <select 
+                    value={project} 
+                    onChange={(e) => setProject(e.target.value)}
+                    className="px-4 py-2 mt-1 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
+                  >
+                    <option value="---" hidden>---</option>
+                    {projectsMap.get(budgetManager)?.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {t[option.labelKey]}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {project && (
+                <textarea
+                  value={descrition}
+                  onChange={(e) => setDescrition(e.target.value)}
+                  placeholder={t.descrition}
+                  rows={4}
+                  className="px-4 py-2 mt-1 w-9/10 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400 resize-none"
+                />
+              )}
 
             </div>
           )}
