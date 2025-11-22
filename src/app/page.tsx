@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { translations, Language } from '@/local';
 import { budgetManagers, projectsMap } from '@/local/budgetStructure';
+import { generatePDF } from '@/local/pdfScrpits';
 
 export default function Home() {
   const [language, setLanguage] = useState<Language>("sv");
@@ -38,6 +39,7 @@ export default function Home() {
 
   function submitForm() {
     console.log("Submit Form!")
+    generatePDF(name, date);
     console.log(`Data:
       Verifikats typ: ${V_Type}
       
