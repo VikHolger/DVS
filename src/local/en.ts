@@ -12,5 +12,12 @@ export const en = {
 
   bankName: "Bank name",
   clearing: "Clearing",
-  bankNr: "Account number"
+  bankNr: "Account number",
+
+  buyData: "Information about the purchase",
+  ammount: "Amount",
+  purchased: "Purchased on",
+  numReceipts: "Number of receipts",
+
+  buyUsage: "Usage of the Purchase",
 };

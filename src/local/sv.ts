@@ -13,4 +13,11 @@ export const sv = {
   bankName: "Bankens namn",
   clearing: "Clearing",
   bankNr: "Konto nummer",
+
+  buyData: "Information om köpet",
+  ammount:"Belopp",
+  purchased: "Köptes den",
+  numReceipts: "Antal kvitton",
+
+  buyUsage: "Köpets ändamål",
 };

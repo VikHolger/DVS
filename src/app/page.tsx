@@ -7,14 +7,18 @@ export default function Home() {
   const [language, setLanguage] = useState<Language>("sv");
   const t = translations[language];
 
-  const [name, setName] = useState(""); // Namn på personen
-  const [V_Type, set_V_Type] = useState(""); // Vilken verifikats typ det är (Privat/Mynt)
+  const [name, setName] = useState("");
+  const [V_Type, set_V_Type] = useState("");
 
-  const [myntCard, setMyntCard] = useState("---"); // Dropdown för det olika mynt korten
+  const [myntCard, setMyntCard] = useState("---");
 
-  const [bankName, setBankName] = useState(""); // Dropdown för det olika mynt korten
-  const [clearing, setClearing] = useState(""); // Dropdown för det olika mynt korten
-  const [bankNr, setBankNr] = useState(""); // Dropdown för det olika mynt korten
+  const [bankName, setBankName] = useState("");
+  const [clearing, setClearing] = useState("");
+  const [bankNr, setBankNr] = useState("");
+
+  const [ammount, setAmmount] = useState("");
+  const [numReceipts, setNumReceipts] = useState("");
+  const [purchaseDate, setPurchaseDate] = useState(""); 
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black flex-col">
@@ -56,12 +60,12 @@ export default function Home() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder={t.enterName}
-              className="px-4 py-2 min-w-1/2 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
+              className="px-4 py-2 min-w-1/2 border text-center border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
               />
           </div>
 
           {name && (
-            <div className='Verificaton_Type min-w-full flex items-center justify-around m-2 pt-2'>
+            <div className='Verificaton_Type min-w-full flex items-center justify-around m-2 py-1'>
               <button
                 type="button"
                 onClick={(e) => set_V_Type("Mynt")}
@@ -77,8 +81,8 @@ export default function Home() {
           )}
 
           {V_Type == "Mynt" && ( //Detaljer om Mynt
-            <div className='Your_Details min-w-full flex flex-col items-center justify-around m-2 border rounded-xl'>
-              <p className='text-xl'>
+            <div className='Your_Details min-w-full flex flex-col items-center justify-around m-2 py-2 border rounded-xl'>
+              <p className='text-xl underline'>
                 {V_Type}
               </p>
 
@@ -102,21 +106,21 @@ export default function Home() {
           )}
 
           {V_Type == "Privat" && ( // Detaljer om personens bank
-            <div className='Your_Details min-w-full flex flex-col items-center justify-around p-2 border rounded-xl'>
-              <p className='text-xl'>
+            <div className='Your_Details min-w-full flex flex-col items-center justify-around m-2 py-2 border rounded-xl'>
+              <p className='text-xl underline'>
                 {V_Type}
               </p>
 
               <input
-              type="text"
-              value={bankName}
-              onChange={(e) => setBankName(e.target.value)}
-              placeholder={t.bankName}
-              className="px-4 py-2 min-w-1/2 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
+                type="text"
+                value={bankName}
+                onChange={(e) => setBankName(e.target.value)}
+                placeholder={t.bankName}
+                className="px-4 py-2 min-w-1/2 border mt-2 text-center border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
               />
 
               {bankName && (
-                <div className='flex flex-row justify-center m-2'>
+                <div className='flex flex-row justify-center mt-1'>
                   <input
                     type="text"
                     maxLength={5}
@@ -127,8 +131,8 @@ export default function Home() {
                       }
                     }}
                     placeholder={t.clearing}
-                    className="px-4 py-2 max-w-1/5 flex-1 mr-2 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
-                    />
+                    className="px-4 py-2 max-w-1/5 mr-2 border text-center border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
+                  />
 
                   <input
                     type="text"
@@ -141,16 +145,74 @@ export default function Home() {
                     }}
                     placeholder={t.bankNr}
                     className="px-4 py-2 min-w-3/5 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
-                    />
+                  />
                 </div>
               )}
 
             </div>
           )}
 
-          {(myntCard != "---" || (clearing && bankNr)) && ( // Detaljer om köp
-            <div>
-              abc
+          {((V_Type == "Mynt" && myntCard != "---") || (V_Type == "Privat" && clearing && bankNr)) && ( // Detaljer om köpet i sig
+            <div className='min-w-full flex flex-col items-center justify-around m-2 py-2 border rounded-xl'>
+              <p className='text-xl underline'>
+                {t.buyData}
+              </p>
+
+            <div className='flex flex-row items-center justify-center mt-2'>
+              <input
+                type="text"
+                value={ammount}
+                onChange={(e) => {
+                  if (/^\d*[.,]?\d{0,2}$/.test(e.target.value)) {
+                    setAmmount(e.target.value);
+                  }
+                }}
+                placeholder={t.ammount}
+                className="px-4 py-2 max-w-2/5 border text-center flex border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
+              />
+
+              <p className='flex pl-2'>
+                kr
+              </p>
+            </div>
+
+            {ammount && (
+              <input
+                type="text"
+                value={numReceipts}
+                onChange={(e) => {
+                  if (/^\d*$/.test(e.target.value)) {
+                    setNumReceipts(e.target.value);
+                  }
+                }}
+                placeholder={t.numReceipts}
+                className="px-4 py-2 mt-1 min-w-1/6 max-w-2/5 text-center border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
+              />
+            )}
+
+            {numReceipts && (
+              <div className='flex flex-row self-center items-center min-w-full justify-center mt-1'>
+                <p className='flex m-2'>
+                  {t.purchased}
+                </p>
+                <input
+                  type="date"
+                  value={purchaseDate}
+                  onChange={(e) => setPurchaseDate(e.target.value)}
+                  className="px-4 py-2 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
+                />
+              </div>
+            )}
+
+          </div>
+          )}
+
+          {purchaseDate && (
+            <div className='min-w-full flex flex-col items-center justify-around m-2 py-2 border rounded-xl'>
+              <p className='text-xl underline'>
+                {t.buyUsage}
+              </p>
+
             </div>
           )}
 
