@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@pdfme/common": "^5.5.1",
+    "@pdfme/generator": "^5.5.1",
     "@tailwindcss/vite": "^4.1.16",
     "next": "16.0.1",
     "react": "19.2.0",
