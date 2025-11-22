@@ -4,14 +4,17 @@ import React, { useState, useEffect } from 'react';
 import { translations, Language } from '@/local';
 
 export default function Home() {
-  const [V_Type, set_V_Type] = useState(""); // Vilken verifikats typ det är (Privat/Mynt)
+  const [language, setLanguage] = useState<Language>("sv");
+  const t = translations[language];
+
   const [name, setName] = useState(""); // Namn på personen
+  const [V_Type, set_V_Type] = useState(""); // Vilken verifikats typ det är (Privat/Mynt)
 
   const [myntCard, setMyntCard] = useState("---"); // Dropdown för det olika mynt korten
 
-  const [language, setLanguage] = useState<Language>("sv");
-
-  const t = translations[language];
+  const [bankName, setBankName] = useState(""); // Dropdown för det olika mynt korten
+  const [clearing, setClearing] = useState(""); // Dropdown för det olika mynt korten
+  const [bankNr, setBankNr] = useState(""); // Dropdown för det olika mynt korten
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black flex-col">
@@ -74,7 +77,7 @@ export default function Home() {
           )}
 
           {V_Type == "Mynt" && ( //Detaljer om Mynt
-            <div className='Your_Details min-w-full flex flex-col items-center justify-around m-2'>
+            <div className='Your_Details min-w-full flex flex-col items-center justify-around m-2 border rounded-xl'>
               <p className='text-xl'>
                 {V_Type}
               </p>
@@ -99,14 +102,53 @@ export default function Home() {
           )}
 
           {V_Type == "Privat" && ( // Detaljer om personens bank
-            <div className='Your_Details min-w-full flex justify-around m-2'>
+            <div className='Your_Details min-w-full flex flex-col items-center justify-around p-2 border rounded-xl'>
               <p className='text-xl'>
                 {V_Type}
               </p>
+
+              <input
+              type="text"
+              value={bankName}
+              onChange={(e) => setBankName(e.target.value)}
+              placeholder={t.bankName}
+              className="px-4 py-2 min-w-1/2 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
+              />
+
+              {bankName && (
+                <div className='flex flex-row justify-center m-2'>
+                  <input
+                    type="text"
+                    maxLength={5}
+                    value={clearing}
+                    onChange={(e) => {
+                      if (/^\d*$/.test(e.target.value)) {
+                        setClearing(e.target.value);
+                      }
+                    }}
+                    placeholder={t.clearing}
+                    className="px-4 py-2 max-w-1/5 flex-1 mr-2 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
+                    />
+
+                  <input
+                    type="text"
+                    maxLength={12}
+                    value={bankNr}
+                    onChange={(e) => {
+                      if (/^\d*$/.test(e.target.value)) {
+                        setBankNr(e.target.value);
+                      }
+                    }}
+                    placeholder={t.bankNr}
+                    className="px-4 py-2 min-w-3/5 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
+                    />
+                </div>
+              )}
+
             </div>
           )}
 
-          {myntCard != "---" && ( // Detaljer om köp
+          {(myntCard != "---" || (clearing && bankNr)) && ( // Detaljer om köp
             <div>
               abc
             </div>
