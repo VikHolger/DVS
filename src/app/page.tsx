@@ -45,22 +45,35 @@ export default function Home() {
           {t.welcome}
         </p>
 
-        <div className='Form min-w-9/12 self-center'>
-          <div className='Verificaton_Type min-w-full flex items-center justify-around m-2'>
-            <button
-              type="button"
-              onClick={(e) => set_V_Type("Mynt")}
-              className="bg-gray-700 hover:bg-gray-800 text-gray-400 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            > {t.myntButton} </button>
+        <div className='Form min-w-9/12 self-center item-center'>
 
-            <button
-              type="button"
-              onClick={(e) => set_V_Type("Privat")}
-              className="bg-gray-700 hover:bg-gray-800 text-gray-400 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            > {t.privatButton} </button>
+          <div className='flex flex-col items-center pt-5'>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder={t.enterName}
+              className="px-4 py-2 min-w-1/2 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
+              />
           </div>
 
-          {V_Type == "Mynt" && (
+          {name && (
+            <div className='Verificaton_Type min-w-full flex items-center justify-around m-2 pt-2'>
+              <button
+                type="button"
+                onClick={(e) => set_V_Type("Mynt")}
+                className="bg-gray-700 hover:bg-gray-800 text-gray-400 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              > {t.myntButton} </button>
+
+              <button
+                type="button"
+                onClick={(e) => set_V_Type("Privat")}
+                className="bg-gray-700 hover:bg-gray-800 text-gray-400 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              > {t.privatButton} </button>
+            </div>
+          )}
+
+          {V_Type == "Mynt" && ( //Detaljer om Mynt
             <div className='Your_Details min-w-full flex flex-col items-center justify-around m-2'>
               <p className='text-xl'>
                 {V_Type}
@@ -82,23 +95,20 @@ export default function Home() {
                   <option value="option3">EKO</option>
                 </select>
               </div>
-              {myntCard != "---" && (
-                <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder={t.enterName}
-                className="px-4 py-2 min-w-1/2 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
-              />
-              )}
             </div>
           )}
 
-          {V_Type == "Privat" && (
+          {V_Type == "Privat" && ( // Detaljer om personens bank
             <div className='Your_Details min-w-full flex justify-around m-2'>
               <p className='text-xl'>
                 {V_Type}
               </p>
+            </div>
+          )}
+
+          {myntCard != "---" && ( // Detaljer om köp
+            <div>
+              abc
             </div>
           )}
 
