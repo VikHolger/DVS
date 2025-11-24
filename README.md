@@ -23,9 +23,9 @@ Digitala Verifikat system -  Ett enklare sett för sektionens medlemmar att fyll
 - Undersöka om Fortnox, Snabgross o Mynt har API och om det går att användas till denna produkt
 
 ## Roadmap
-- [~] V 0.1
+- [X] V 0.1
     - [X] Medlemar kan fylla i verifikat på hemsidan
-    - [ ] Skapar en PDF med verifikatsdetaljerna
+    - [X] Skapar en PDF med verifikatsdetaljerna
 - [ ] V 0.2
     - [ ] Ladda up kvitton
     - [ ] Det skapas ett ärende

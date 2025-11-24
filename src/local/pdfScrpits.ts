@@ -3,17 +3,25 @@ import { generate } from '@pdfme/generator';
 import { text, line, rectangle } from '@pdfme/schemas';
 import { template } from './pdfTemplate';
 
-const font: Font = {
-  serif: {
-    data: 'https://example.com/fonts/serif.ttf',
-    fallback: true,
-  },
-  sans_serif: {
-    data: 'https://example.com/fonts/sans_serif.ttf',
-  },
+const loadFonts = async (): Promise<Font> => {
+  return {
+    rale: {
+      data: await fetch('/fonts/Raleway-Regular.ttf').then(res => res.arrayBuffer()),
+      fallback: true,
+    },
+    rale_title: {
+      data: await fetch('/fonts/Raleway-SemiBoldItalic.ttf').then(res => res.arrayBuffer()),
+    },
+    code: {
+      data: await fetch('/fonts/FiraCode-Regular.ttf').then(res => res.arrayBuffer()),
+    },
+  };
 };
 
-export function generatePDF(V_Type, name, date, myntCard, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition) {
+export async function generatePDF(V_Type, name, date, myntCard, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition) {
+    // Load fonts first
+    const font = await loadFonts();
+    
     const inputs = [{ 
         V_Type: V_Type,
 
@@ -35,7 +43,7 @@ export function generatePDF(V_Type, name, date, myntCard, bankName, clearing, ba
         projectNum: projectNum,
      }];
     
-    generate({
+    const pdf = await generate({
          template, 
          inputs,
          plugins: {
@@ -44,7 +52,8 @@ export function generatePDF(V_Type, name, date, myntCard, bankName, clearing, ba
             rectangle,
         }, 
         options: { font }
-        }).then((pdf) => {
+    });
+    
     console.log(pdf);
 
     //Browser
@@ -53,5 +62,4 @@ export function generatePDF(V_Type, name, date, myntCard, bankName, clearing, ba
 
     // Node.js
     // fs.writeFileSync(path.join(__dirname, `test.pdf`), pdf);
-    });
 }

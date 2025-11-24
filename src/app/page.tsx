@@ -39,7 +39,7 @@ export default function Home() {
 
   function submitForm() {
     console.log("Submit Form!")
-    generatePDF(name, date);
+    generatePDF(V_Type, name, date, myntCard, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition);
     console.log(`Data:
       Verifikats typ: ${V_Type}
       
