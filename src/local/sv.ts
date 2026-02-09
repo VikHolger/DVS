@@ -21,6 +21,8 @@ export const sv = {
   purchased: "Köptes den",
   numReceipts: "Antal kvitton",
 
+  budChief: "Budget ansvarig:",
+  buyIfUCan: "(ej obligatorisk, men underlättar om du kan)",
   buyUsage: "Köpets ändamål",
   descrition: "Beskrivning om hur det användes",
 

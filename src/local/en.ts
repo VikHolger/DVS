@@ -14,21 +14,7 @@ export const en = {
 
   bankName: "Bank name",
   clearing: "Clearing",
-  bankNr: "Account number",
-
-  buyData: "Information about the purchase",
-  ammount: "Amount",
-  purchased: "Purchased on",
-  numReceipts: "Number of receipts",
-
-  buyUsage: "Usage of the Purchase",
-  descrition: "Description on how it is used",
-
-  //Project names
-  pr_104: "Board",
-  pr_105: "Mutmiddag",
-  pr_106: "Gifts",
-  pr_107: "SAG",
+ pr_107: "SAG",
   pr_111: "The shift",
   pr_112: "Administartion",
   pr_113: "Bank cost",
@@ -38,7 +24,23 @@ export const en = {
   pr_123: "Project pott",
   pr_124: "Intern activitys LG",
   pr_125: "Over chapter activity",
-  pr_1xx: "Inter board activity",
+  pr_1xx: "Inter board activity",  bankNr: "Account number",
+
+  buyData: "Information about the purchase",
+  ammount: "Amount",
+  purchased: "Purchased on",
+  numReceipts: "Number of receipts",
+
+  budChief: "Budget maneger:",
+  buyIfUCan: "(Optional, but helps us if you know it)",
+  buyUsage: "Usage of the purchase",
+  descrition: "Description on how it is used",
+
+  //Project names
+  pr_104: "Board",
+  pr_105: "Mutmiddag",
+  pr_106: "Gifts",
+ 
 
   pr_201: "Barveksamhet",
   pr_202: "Interna aktiviteter",

@@ -18,7 +18,8 @@ const loadFonts = async (): Promise<Font> => {
   };
 };
 
-export async function generatePDF(V_Type, name, date, myntCard, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition) {
+
+export async function generateMyntPDF(V_Type, name, date, myntCard, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition) {
     // Load fonts first
     const font = await loadFonts();
     
@@ -29,6 +30,52 @@ export async function generatePDF(V_Type, name, date, myntCard, bankName, cleari
         date: date,
 
         myntCard: myntCard,
+
+        bankName: "---",
+        clearing: "---",
+        bankNum: "---",
+
+        purchaseDate: purchaseDate,
+        ammount: ammount,
+        numReceipts: numReceipts,
+        descrition: descrition,
+
+        budgetManager: budgetManager,
+        projectNum: projectNum,
+     }];
+    
+    const pdf = await generate({
+         template, 
+         inputs,
+         plugins: {
+            text,
+            line,
+            rectangle,
+        }, 
+        options: { font }
+    });
+    
+    console.log(pdf);
+
+    //Browser
+    const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
+    window.open(URL.createObjectURL(blob));
+
+    // Node.js
+    // fs.writeFileSync(path.join(__dirname, `test.pdf`), pdf);
+}
+
+export async function generatePrivatePDF(V_Type, name, date, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition) {
+    // Load fonts first
+    const font = await loadFonts();
+    
+    const inputs = [{ 
+        V_Type: V_Type,
+
+        name: name,
+        date: date,
+
+        myntCard: "---",
 
         bankName: bankName,
         clearing: clearing,
