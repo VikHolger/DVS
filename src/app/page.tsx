@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { translations, Language } from '@/local';
 import { budgetManagers, projectsMap } from '@/local/budgetStructure';
-import { generateMyntPDF, generatePrivatePDF } from '@/local/pdfScrpits';
+import { generateMyntPDF, generatePrivatePDF } from '@/local/pdfScripts';
 
 export default function Home() {
   const [language, setLanguage] = useState<Language>("sv");
@@ -20,12 +20,13 @@ export default function Home() {
   const [bankNum, setBankNr] = useState("");
 
   const [ammount, setAmmount] = useState("");
-  const [numReceipts, setNumReceipts] = useState("");
   const [purchaseDate, setPurchaseDate] = useState(""); 
 
   const [budgetManager, setBudgetManager] = useState("");
   const [projectNum, setProjectNum] = useState("");
   const [descrition, setDescrition] = useState("");
+
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
 
   const [shouldSubmit, setShouldSubmit] = useState(false);
 
@@ -38,10 +39,32 @@ export default function Home() {
   }, [date, shouldSubmit]);
 
   function submitForm() {
-    if (V_Type == "Mynt") generateMyntPDF(V_Type, name, date, myntCard, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition);
-    else if (V_Type == "Privat") generatePrivatePDF(V_Type, name, date, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition);
+    // Use uploadedImages.length as numReceipts
+    const numReceipts = String(uploadedImages.length);
+    
+    if (V_Type == "Mynt") generateMyntPDF(V_Type, name, date, myntCard, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
+    else if (V_Type == "Privat") generatePrivatePDF(V_Type, name, date, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
     else throw new Error("Incorrect V_Type");
   }
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    const fileArray = Array.from(files);
+    
+    fileArray.forEach(file => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUploadedImages(prev => [...prev, reader.result as string]);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const removeImage = (index: number) => {
+    setUploadedImages(prev => prev.filter((_, i) => i !== index));
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black flex-col">
@@ -200,20 +223,44 @@ export default function Home() {
             </div>
 
             {ammount && (
-              <input
-                type="text"
-                value={numReceipts}
-                onChange={(e) => {
-                  if (/^\d*$/.test(e.target.value)) {
-                    setNumReceipts(e.target.value);
-                  }
-                }}
-                placeholder={t.numReceipts}
-                className="px-4 py-2 mt-1 min-w-1/6 max-w-2/5 text-center border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
-              />
+              <div className='flex flex-row items-center justify-center gap-2 mt-1'>
+                <label className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+                  Upload Images
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleImageUpload}
+                    className="hidden"
+                  />
+                </label>
+              </div>
             )}
 
-            {numReceipts && (
+            {uploadedImages.length > 0 && (
+              <div className='mt-3 w-full'>
+                <p className='text-sm font-semibold mb-2'>Uploaded Images ({uploadedImages.length}):</p>
+                <div className='grid grid-cols-3 gap-2'>
+                  {uploadedImages.map((img, index) => (
+                    <div key={index} className='relative group'>
+                      <img 
+                        src={img} 
+                        alt={`Upload ${index + 1}`}
+                        className='w-full h-24 object-cover rounded border border-gray-300'
+                      />
+                      <button
+                        onClick={() => removeImage(index)}
+                        className='absolute top-1 right-1 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity'
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {uploadedImages.length > 0 && (
               <div className='flex flex-row self-center items-center min-w-full justify-center mt-1'>
                 <p className='flex m-2'>
                   {t.purchased}
