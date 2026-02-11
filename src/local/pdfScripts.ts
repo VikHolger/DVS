@@ -60,8 +60,11 @@ export function generateMyntPDF(
   loadFonts().then(font => {
     console.log('Fonts loaded, building template');
     
-    // Convert all values to strings to avoid split() errors
-    const inputs = [{ 
+    // Build inputs array - one input object per page
+    const inputs = [];
+    
+    // First page input with all form data
+    inputs.push({ 
       V_Type: String(V_Type || ''),
       name: String(name || ''),
       date: String(date || ''),
@@ -72,25 +75,22 @@ export function generateMyntPDF(
       descrition: String(descrition || ''),
       budgetManager: String(budgetManager || ''),
       projectNum: String(projectNum || ''),
-    }];
+    });
 
-    // Add image inputs for each uploaded image
+    // Add one input object per image page
     images.forEach(imageData => {
       inputs.push({
         receiptImage: imageData,
-      } as any);
+      });
     });
 
-    let finalTemplate = template;
+    let finalTemplate: Template;
 
     // Only create multi-page template if there are images
     if (images.length > 0) {
       console.log('=== DEBUG START ===');
       console.log('Number of images:', images.length);
-      console.log('template.schemas type:', typeof template.schemas);
-      console.log('template.schemas is array:', Array.isArray(template.schemas));
-      console.log('template.schemas.length:', template.schemas?.length);
-      console.log('template.schemas[0] is array:', Array.isArray(template.schemas[0]));
+      console.log('Number of inputs:', inputs.length);
       
       // Build the schemas array: first page from template + one page per image
       const schemas = [template.schemas[0]];
@@ -107,26 +107,23 @@ export function generateMyntPDF(
           }
         ];
         schemas.push(imageSchema);
-        console.log(`Added schema for image ${i}, is array:`, Array.isArray(imageSchema));
       }
       
       console.log('Total schemas:', schemas.length);
-      console.log('schemas[0] is array:', Array.isArray(schemas[0]));
-      if (schemas.length > 1) {
-        console.log('schemas[1] is array:', Array.isArray(schemas[1]));
-        console.log('schemas[1]:', JSON.stringify(schemas[1]));
-      }
+      console.log('Schemas match inputs:', schemas.length === inputs.length);
 
       finalTemplate = {
         schemas: schemas,
         basePdf: template.basePdf,
       };
       
-      console.log('finalTemplate.schemas.length:', finalTemplate.schemas.length);
+      console.log('Final template schemas length:', finalTemplate.schemas.length);
       console.log('=== DEBUG END ===');
+    } else {
+      finalTemplate = template;
     }
     
-    console.log('Calling generate...');
+    console.log('Calling generate with', inputs.length, 'inputs and', finalTemplate.schemas.length, 'schemas');
     generate({
       template: finalTemplate, 
       inputs,
@@ -173,8 +170,11 @@ export function generatePrivatePDF(
   loadFonts().then(font => {
     console.log('Fonts loaded, building template');
     
-    // Convert all values to strings to avoid split() errors
-    const inputs = [{ 
+    // Build inputs array - one input object per page
+    const inputs = [];
+    
+    // First page input with all form data
+    inputs.push({ 
       V_Type: String(V_Type || ''),
       name: String(name || ''),
       date: String(date || ''),
@@ -187,25 +187,22 @@ export function generatePrivatePDF(
       descrition: String(descrition || ''),
       budgetManager: String(budgetManager || ''),
       projectNum: String(projectNum || ''),
-    }];
+    });
 
-    // Add image inputs for each uploaded image
+    // Add one input object per image page
     images.forEach(imageData => {
       inputs.push({
         receiptImage: imageData,
-      } as any);
+      });
     });
 
-    let finalTemplate = template;
+    let finalTemplate: Template;
 
     // Only create multi-page template if there are images
     if (images.length > 0) {
       console.log('=== DEBUG START ===');
       console.log('Number of images:', images.length);
-      console.log('template.schemas type:', typeof template.schemas);
-      console.log('template.schemas is array:', Array.isArray(template.schemas));
-      console.log('template.schemas.length:', template.schemas?.length);
-      console.log('template.schemas[0] is array:', Array.isArray(template.schemas[0]));
+      console.log('Number of inputs:', inputs.length);
       
       // Build the schemas array: first page from template + one page per image
       const schemas = [template.schemas[0]];
@@ -222,26 +219,23 @@ export function generatePrivatePDF(
           }
         ];
         schemas.push(imageSchema);
-        console.log(`Added schema for image ${i}, is array:`, Array.isArray(imageSchema));
       }
       
       console.log('Total schemas:', schemas.length);
-      console.log('schemas[0] is array:', Array.isArray(schemas[0]));
-      if (schemas.length > 1) {
-        console.log('schemas[1] is array:', Array.isArray(schemas[1]));
-        console.log('schemas[1]:', JSON.stringify(schemas[1]));
-      }
+      console.log('Schemas match inputs:', schemas.length === inputs.length);
 
       finalTemplate = {
         schemas: schemas,
         basePdf: template.basePdf,
       };
       
-      console.log('finalTemplate.schemas.length:', finalTemplate.schemas.length);
+      console.log('Final template schemas length:', finalTemplate.schemas.length);
       console.log('=== DEBUG END ===');
+    } else {
+      finalTemplate = template;
     }
       
-    console.log('Calling generate...');
+    console.log('Calling generate with', inputs.length, 'inputs and', finalTemplate.schemas.length, 'schemas');
     generate({
       template: finalTemplate, 
       inputs,
