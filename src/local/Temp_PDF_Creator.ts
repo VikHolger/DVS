@@ -59,15 +59,12 @@ export function generateMyntPDF(
   
   loadFonts().then(font => {
     console.log('Fonts loaded, building template');
-
-    // IMPORTANT: pdfme's `inputs` array is a list of separate DOCUMENTS, not pages.
-    // Every entry in `inputs` gets rendered against the FULL `schemas` array (all pages)
-    // and the results are concatenated. So inputs.length * schemas.length pages were
-    // being produced before. We want exactly ONE document, so `inputs` must have
-    // exactly one object containing every field for every page. Each image page also
-    // needs a uniquely-named field (schema field names must be unique within one document,
-    // since a repeated name across pages only ever pulls from the same single value).
-    const singleInput: Record<string, string> = {
+    
+    // Build inputs array - one input object per page
+    const inputs = [];
+    
+    // First page input with all form data
+    inputs.push({ 
       V_Type: String(V_Type || ''),
       name: String(name || ''),
       date: String(date || ''),
@@ -78,120 +75,14 @@ export function generateMyntPDF(
       descrition: String(descrition || ''),
       budgetManager: String(budgetManager || ''),
       projectNum: String(projectNum || ''),
-    };
-
-    images.forEach((imageData, i) => {
-      singleInput[`receiptImage_${i}`] = imageData;
     });
-
-    const inputs = [singleInput];
-
-    let finalTemplate: Template;
-
-    // Only create multi-page template if there are images
-    if (images.length > 0) {
-      console.log('=== DEBUG START ===');
-      console.log('Number of images:', images.length);
-
-      // Build the schemas array: first page from template + one page per image,
-      // each with a unique field name.
-      const schemas = [template.schemas[0]];
-
-      for (let i = 0; i < images.length; i++) {
-        const imageSchema = [
-          {
-            name: `receiptImage_${i}`,
-            type: 'image',
-            position: { x: 10, y: 10 },
-            width: 190,
-            height: 267,
-          }
-        ];
-        schemas.push(imageSchema);
-      }
-
-      console.log('Total schemas (= total pages):', schemas.length);
-
-      finalTemplate = {
-        schemas: schemas,
-        basePdf: template.basePdf,
-      };
-
-      console.log('Final template schemas length:', finalTemplate.schemas.length);
-      console.log('=== DEBUG END ===');
-    } else {
-      finalTemplate = template;
-    }
-
-    console.log('Calling generate with', inputs.length, 'input document and', finalTemplate.schemas.length, 'pages');
-    generate({
-      template: finalTemplate, 
-      inputs,
-      plugins: {
-        text,
-        line,
-        rectangle,
-        image,
-      }, 
-      options: { font }
-    }).then((pdf) => {
-      console.log('PDF generated successfully');
-
-      //Browser
-      const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
-      window.open(URL.createObjectURL(blob));
-    }).catch((error) => {
-      console.error('PDF generation error:', error);
-      alert('PDF generation failed. Check console for details.');
-    });
-  }).catch((error) => {
-    console.error('Font loading error:', error);
-    alert('Font loading failed. Check console for details.');
-  });
-}
-
-export function generatePrivatePDF(
-  V_Type: string, 
-  name: string, 
-  date: string, 
-  bankName: string, 
-  clearing: string, 
-  bankNum: string, 
-  ammount: string, 
-  numReceipts: string, 
-  purchaseDate: string, 
-  budgetManager: string, 
-  projectNum: string, 
-  descrition: string,
-  images: string[] = []
-) {
-  console.log('generatePrivatePDF called with', images.length, 'images');
-  
-  loadFonts().then(font => {
-    console.log('Fonts loaded, building template');
-    
-    // First page input with all form data
-    const singleInput: Record<string, string> = {
-      V_Type: String(V_Type || ''),
-      name: String(name || ''),
-      date: String(date || ''),
-      bankName: String(bankName || ''),
-      clearing: String(clearing || ''),
-      bankNum: String(bankNum || ''),
-      purchaseDate: String(purchaseDate || ''),
-      ammount: String(ammount || ''),
-      numReceipts: String(numReceipts || images.length),
-      descrition: String(descrition || ''),
-      budgetManager: String(budgetManager || ''),
-      projectNum: String(projectNum || ''),
-    };
 
     // Add one input object per image page
-    images.forEach((imageData, i) => {
-      singleInput[`receiptImage_${i}`] = imageData;
+    images.forEach(imageData => {
+      inputs.push({
+        receiptImage: imageData,
+      });
     });
-
-    const inputs = [singleInput];
 
     let finalTemplate: Template;
 
@@ -208,7 +99,7 @@ export function generatePrivatePDF(
       for (let i = 0; i < images.length; i++) {
         const imageSchema = [
           {
-            name: `receiptImage_${i}`,
+            name: 'receiptImage',
             type: 'image',
             position: { x: 10, y: 10 },
             width: 190,
@@ -231,7 +122,7 @@ export function generatePrivatePDF(
     } else {
       finalTemplate = template;
     }
-      
+    
     console.log('Calling generate with', inputs.length, 'inputs and', finalTemplate.schemas.length, 'schemas');
     generate({
       template: finalTemplate, 
