@@ -137,9 +137,11 @@ export function generateMyntPDF(
     }).then((pdf) => {
       console.log('PDF generated successfully');
 
+      sharePDF(pdf.buffer);
+
       //Browser
-      const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
-      window.open(URL.createObjectURL(blob));
+      //const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
+      //window.open(URL.createObjectURL(blob));
     }).catch((error) => {
       console.error('PDF generation error:', error);
       alert('PDF generation failed. Check console for details.');
@@ -246,9 +248,11 @@ export function generatePrivatePDF(
     }).then((pdf) => {
       console.log('PDF generated successfully');
 
+      sharePDF(pdf.buffer);
+
       //Browser
-      const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
-      window.open(URL.createObjectURL(blob));
+      //const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
+      //window.open(URL.createObjectURL(blob));
     }).catch((error) => {
       console.error('PDF generation error:', error);
       alert('PDF generation failed. Check console for details.');
@@ -257,4 +261,25 @@ export function generatePrivatePDF(
     console.error('Font loading error:', error);
     alert('Font loading failed. Check console for details.');
   });
+}
+
+async function sharePDF(blob: Blob, filename = 'Verifikat.pdf') {
+  const file = new File([blob], filename, { type: 'application/pdf' });
+
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file], title: 'Verifikat', text: 'Här är verifikatet :)' });
+      return;
+    } catch (err) {
+      if ((err as Error).name !== 'AbortError') console.error('Share failed:', err);
+      return;
+    }
+  }
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
 }
