@@ -137,10 +137,10 @@ export function generateMyntPDF(
     }).then((pdf) => {
       console.log('PDF generated successfully');
 
-      sharePDF(pdf.buffer);
+      const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
+      sharePDF(blob);
 
       //Browser
-      //const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
       //window.open(URL.createObjectURL(blob));
     }).catch((error) => {
       console.error('PDF generation error:', error);
@@ -248,10 +248,10 @@ export function generatePrivatePDF(
     }).then((pdf) => {
       console.log('PDF generated successfully');
 
-      sharePDF(pdf.buffer);
+      const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
+      sharePDF(blob);
 
       //Browser
-      //const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
       //window.open(URL.createObjectURL(blob));
     }).catch((error) => {
       console.error('PDF generation error:', error);
