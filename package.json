@@ -9,13 +9,13 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@pdfme/common": "^5.5.1",
-    "@pdfme/generator": "^5.5.1",
-    "@pdfme/schemas": "^5.5.1",
+    "@pdfme/common": "^6.1.12",
+    "@pdfme/generator": "^6.1.12",
+    "@pdfme/schemas": "^6.1.12",
     "@tailwindcss/vite": "^4.1.16",
-    "next": "^9.3.3",
-    "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "next": "^16.2.12",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
