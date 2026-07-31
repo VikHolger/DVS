@@ -40,18 +40,23 @@ export default function Home() {
     const today = new Date().toISOString().split('T')[0];
     setDate(today);
 
-    const numReceipts = String(uploadedImages.length);
-    let blob: Blob;
-    if (V_Type == "Mynt") {
-      blob = await generateMyntPDF(V_Type, name, today, myntCard, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
-    } else if (V_Type == "Privat") {
-      blob = await generatePrivatePDF(V_Type, name, today, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
-    } else {
-      throw new Error("Incorrect V_Type");
-    }
-
+    try {
+      const numReceipts = String(uploadedImages.length);
+      let blob: Blob;
+      if (V_Type == "Mynt") {
+        blob = await generateMyntPDF(V_Type, name, today, myntCard, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
+      } else if (V_Type == "Privat") {
+        blob = await generatePrivatePDF(V_Type, name, today, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
+      } else {
+        throw new Error("Incorrect V_Type");
+      }
     setGeneratedBlob(blob);
-    setIsGenerating(false);
+    } catch (err) {
+      console.error("PDF generation failed:", err);
+      // optionally show an error message to the user here
+    } finally {
+      setIsGenerating(false);
+    }
   }
 
   function handleShareClick() {
@@ -407,7 +412,7 @@ export default function Home() {
               <button onClick={handleGenerateClick} disabled={isGenerating} className="...">
                 {isGenerating ? "Genererar..." : "Generera PDF"}
               </button>
-            ) : (
+            ) : descrition && generatedBlob && (
               <button onClick={handleShareClick} className="...">
                 Dela PDF
               </button>

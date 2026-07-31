@@ -149,6 +149,7 @@ export async function generateMyntPDF(
     alert('Font loading failed. Check console for details.');
     return Promise.reject(error);
   });
+  console.error('generateMyntPDF: reached end of function without returning a Blob');
   return Promise.reject("error");
 }
 
@@ -254,6 +255,7 @@ export function generatePrivatePDF(
     alert('Font loading failed. Check console for details.');
     return Promise.reject(error);
   });
+  console.error('generatePrivatePDF: reached end of function without returning a Blob');
   return Promise.reject("error");
 }
 
