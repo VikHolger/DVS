@@ -1,7 +1,7 @@
 # DVS
 ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FVikHolger%2FDVS%2Frefs%2Fheads%2Fpublic%2Fversion.json)
 
-![Deploy Website](https://github.com/<username>/<repository>/actions/workflows/deploy.yml/badge.svg)
+![Deploy Website](https://github.com/VikHolger/DVS/actions/workflows/deploy.yml/badge.svg)
 
 Digitala Verifikat system -  Ett enklare sett för sektionens medlemmar att fylla i och lämna in verifikat åt flygsektionen.
 
