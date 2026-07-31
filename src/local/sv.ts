@@ -22,8 +22,10 @@ export const sv = {
   numReceipts: "Antal kvitton",
 
   budChief: "Budget ansvarig:",
-  buyIfUCan: "(ej obligatorisk, men underlättar om du kan)",
-  buyUsage: "Köpets ändamål",
+  buyIfUCan: "(ej obligatorisk)",
+   buyUsage: "Köpets ändamål",
+  descritionTitle: "Beskrivning:",
+  mandatory: "(obligatorisk)",
   descrition: "Beskrivning om hur det användes",
 
   //Project names

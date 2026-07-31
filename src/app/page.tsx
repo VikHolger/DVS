@@ -68,16 +68,28 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black flex-col">
-      <header className='flex w-full max-h-full justify-around pt-5 pb-5 flex-col'>
-        <div className="mb-4 ml-4 flex gap-2">
-          <button onClick={() => setLanguage("sv")} className="w-8 h-6">
+      <header className='mb-2 flex w-full max-h-full justify-around pt-5 pb-5 flex-row'>
+        <div className='flex gap-2 items-center'>
+          <p>
+            Flygsektionens
+          </p>
+        </div>
+
+        <div className='flex gap-2 items-center'> 
+          <h1 className=" text-xl self-center underline pb-1">
+          {t.title}
+          </h1>
+        </div>
+        
+        <div className="flex gap-2 items-center">
+          <button onClick={() => setLanguage("sv")} className="w-6 h-4">
             <img 
               src="https://flagcdn.com/w40/se.png" 
               alt="Swedish"
               className="w-full h-full object-cover"
             />
           </button>
-          <button onClick={() => setLanguage("en")} className="w-8 h-6">
+          <button onClick={() => setLanguage("en")} className="w-6 h-4">
             <img 
               src="https://flagcdn.com/w40/gb.png" 
               alt="English"
@@ -85,15 +97,11 @@ export default function Home() {
             />
           </button>
         </div>
-
-        <hr className=''/>
       </header>
 
       <main className="flex min-h-screen w-full max-w-3xl flex-col self-center items-center px-16 bg-white dark:bg-black sm:items-start">
 
-        <h1 className=" text-4xl self-center underline pb-1">
-          {t.title}
-        </h1>
+        
         <p className='self-center'>
           {t.welcome}
         </p>
@@ -284,18 +292,28 @@ export default function Home() {
                 {t.buyUsage}
               </p>
 
+              <div className='min-w-full flex flex-row self-center items-center justify-around mb-2'>
+                <div className='flex flex-col self-center items-center justify-center'>
+                  <p className='flex self-center'>
+                    {t.budChief}
+                  </p>
+                  <p className='flex self-center text-xs'>
+                    {t.buyIfUCan}
+                  </p>
+                </div>
+
+                <div className='flex flex-col self-center items-center justify-center'>
+                  <p className='flex self-center'>
+                    {t.descritionTitle}
+                  </p>
+                  <p className='flex self-center text-xs'>
+                    {t.mandatory}
+                  </p>
+                </div>
+              </div>
+              
               <div className='min-w-full flex flex-row self-center items-center justify-around'>
                 <div className='flex flex-col items-center'>
-
-                  <div className='flex flex-col self-center items-center min-w-full justify-center m-1 mb-2'>
-                    <p className='flex self-center'>
-                      {t.budChief}
-                    </p>
-                    <p className='flex self-center text-xs'>
-                      {t.buyIfUCan}
-                    </p>
-                  </div>
-
                   <select 
                     value={budgetManager} 
                     onChange={(e) => setBudgetManager(e.target.value)}
@@ -329,13 +347,17 @@ export default function Home() {
                 
                 <div className=''>
                 {purchaseDate && (
-                  <textarea
-                    value={descrition}
-                    onChange={(e) => setDescrition(e.target.value)}
-                    placeholder={t.descrition}
-                    rows={4}
-                    className="px-2 py-2 mt-1 w-full border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400 resize-none"
-                  />
+                  <div>
+                    
+                    
+                    <textarea
+                      value={descrition}
+                      onChange={(e) => setDescrition(e.target.value)}
+                      placeholder={t.descrition}
+                      rows={4}
+                      className="px-2 py-2 mt-1 w-full border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400 resize-none"
+                    />
+                  </div>
                 )}
                 </div>
               </div>
