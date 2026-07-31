@@ -28,15 +28,56 @@ export default function Home() {
 
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
 
-  const [shouldSubmit, setShouldSubmit] = useState(false);
-
+  const [generatedBlob, setGeneratedBlob] = useState<Blob | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
-    if (shouldSubmit) {
-      // submitForm();
-      setShouldSubmit(false);
+    
+  }, [date]);
+
+  async function handleGenerateClick() {
+    setIsGenerating(true);
+    const today = new Date().toISOString().split('T')[0];
+    setDate(today);
+
+    const numReceipts = String(uploadedImages.length);
+    let blob: Blob;
+    if (V_Type == "Mynt") {
+      blob = await generateMyntPDF(V_Type, name, today, myntCard, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
+    } else if (V_Type == "Privat") {
+      blob = await generatePrivatePDF(V_Type, name, today, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
+    } else {
+      throw new Error("Incorrect V_Type");
     }
-  }, [date, shouldSubmit]);
+
+    setGeneratedBlob(blob);
+    setIsGenerating(false);
+  }
+
+  function handleShareClick() {
+    if (generatedBlob) sharePDF(generatedBlob);
+  }
+
+  async function sharePDF(blob: Blob, filename = 'Verifikat.pdf') {
+    const file = new File([blob], filename, { type: 'application/pdf' });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: 'Verifikat', text: 'Här är verifikatet :)' });
+        return;
+      } catch (err) {
+        if ((err as Error).name !== 'AbortError') console.error('Share failed:', err);
+        return;
+      }
+    }
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
   function submitForm(currentDate: string) {
     const numReceipts = String(uploadedImages.length);
@@ -362,20 +403,15 @@ export default function Home() {
             </div>
           )}
 
-          {descrition && (
-            <button
-              type="submit"
-              onClick={() => {
-                const today = new Date().toISOString().split('T')[0];
-                setDate(today); // still update state if you need it displayed elsewhere
-                submitForm(today); // call directly, in the same click event
-              }}
-              className="mt-2 self-center bg-gray-700 hover:bg-gray-800 text-gray-400 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            >
-              Submit
-            </button>
-          )}
-
+          {descrition && !generatedBlob ? (
+              <button onClick={handleGenerateClick} disabled={isGenerating} className="...">
+                {isGenerating ? "Genererar..." : "Generera PDF"}
+              </button>
+            ) : (
+              <button onClick={handleShareClick} className="...">
+                Dela PDF
+              </button>
+            )}
         </div>
       </main>
     </div>

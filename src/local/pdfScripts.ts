@@ -46,7 +46,7 @@ const loadFonts = async (): Promise<Font> => {
   }
 };
 
-export function generateMyntPDF(
+export async function generateMyntPDF(
   V_Type: string, 
   name: string, 
   date: string, 
@@ -58,7 +58,7 @@ export function generateMyntPDF(
   projectNum: string, 
   descrition: string,
   images: string[] = []
-) {
+): Promise<Blob> {
   console.log('generateMyntPDF called with', images.length, 'images');
   
   loadFonts().then(font => {
@@ -94,7 +94,7 @@ export function generateMyntPDF(
 
     // Only create multi-page template if there are images
     if (images.length > 0) {
-      
+
       // Build the schemas array: first page from template + one page per image,
       // each with a unique field name.
       const schemas = [template.schemas[0]];
@@ -135,18 +135,21 @@ export function generateMyntPDF(
       console.log('PDF generated successfully');
 
       const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
-      sharePDF(blob);
+      return blob;
 
       //Browser
       //window.open(URL.createObjectURL(blob));
     }).catch((error) => {
       console.error('PDF generation error:', error);
       alert('PDF generation failed. Check console for details.');
+      return Promise.reject(error);
     });
   }).catch((error) => {
     console.error('Font loading error:', error);
     alert('Font loading failed. Check console for details.');
+    return Promise.reject(error);
   });
+  return Promise.reject("error");
 }
 
 export function generatePrivatePDF(
@@ -163,7 +166,7 @@ export function generatePrivatePDF(
   projectNum: string, 
   descrition: string,
   images: string[] = []
-) {
+) : Promise<Blob>  {
   console.log('generatePrivatePDF called with', images.length, 'images');
   
   loadFonts().then(font => {
@@ -237,20 +240,24 @@ export function generatePrivatePDF(
       console.log('PDF generated successfully');
 
       const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
-      sharePDF(blob);
+      return blob;
 
       //Browser
       //window.open(URL.createObjectURL(blob));
     }).catch((error) => {
       console.error('PDF generation error:', error);
       alert('PDF generation failed. Check console for details.');
+      return Promise.reject(error);
     });
   }).catch((error) => {
     console.error('Font loading error:', error);
     alert('Font loading failed. Check console for details.');
+    return Promise.reject(error);
   });
+  return Promise.reject("error");
 }
 
+/*
 async function sharePDF(blob: Blob, filename = 'Verifikat.pdf') {
   const file = new File([blob], filename, { type: 'application/pdf' });
 
@@ -271,3 +278,4 @@ async function sharePDF(blob: Blob, filename = 'Verifikat.pdf') {
   a.click();
   URL.revokeObjectURL(url);
 }
+*/
