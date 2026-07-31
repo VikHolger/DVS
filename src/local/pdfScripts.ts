@@ -94,9 +94,7 @@ export function generateMyntPDF(
 
     // Only create multi-page template if there are images
     if (images.length > 0) {
-      console.log('=== DEBUG START ===');
-      console.log('Number of images:', images.length);
-
+      
       // Build the schemas array: first page from template + one page per image,
       // each with a unique field name.
       const schemas = [template.schemas[0]];
@@ -114,20 +112,15 @@ export function generateMyntPDF(
         schemas.push(imageSchema);
       }
 
-      console.log('Total schemas (= total pages):', schemas.length);
-
       finalTemplate = {
         schemas: schemas,
         basePdf: template.basePdf,
       };
 
-      console.log('Final template schemas length:', finalTemplate.schemas.length);
-      console.log('=== DEBUG END ===');
     } else {
       finalTemplate = template;
     }
 
-    console.log('Calling generate with', inputs.length, 'input document and', finalTemplate.schemas.length, 'pages');
     generate({
       template: finalTemplate, 
       inputs,
@@ -203,9 +196,6 @@ export function generatePrivatePDF(
 
     // Only create multi-page template if there are images
     if (images.length > 0) {
-      console.log('=== DEBUG START ===');
-      console.log('Number of images:', images.length);
-      console.log('Number of inputs:', inputs.length);
       
       // Build the schemas array: first page from template + one page per image
       const schemas = [template.schemas[0]];
@@ -223,22 +213,16 @@ export function generatePrivatePDF(
         ];
         schemas.push(imageSchema);
       }
-      
-      console.log('Total schemas:', schemas.length);
-      console.log('Schemas match inputs:', schemas.length === inputs.length);
 
       finalTemplate = {
         schemas: schemas,
         basePdf: template.basePdf,
       };
       
-      console.log('Final template schemas length:', finalTemplate.schemas.length);
-      console.log('=== DEBUG END ===');
     } else {
       finalTemplate = template;
     }
       
-    console.log('Calling generate with', inputs.length, 'inputs and', finalTemplate.schemas.length, 'schemas');
     generate({
       template: finalTemplate, 
       inputs,

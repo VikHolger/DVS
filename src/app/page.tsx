@@ -33,17 +33,15 @@ export default function Home() {
 
   useEffect(() => {
     if (shouldSubmit) {
-      submitForm();
+      // submitForm();
       setShouldSubmit(false);
     }
   }, [date, shouldSubmit]);
 
-  function submitForm() {
-    // Use uploadedImages.length as numReceipts
+  function submitForm(currentDate: string) {
     const numReceipts = String(uploadedImages.length);
-    
-    if (V_Type == "Mynt") generateMyntPDF(V_Type, name, date, myntCard, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
-    else if (V_Type == "Privat") generatePrivatePDF(V_Type, name, date, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
+    if (V_Type == "Mynt") generateMyntPDF(V_Type, name, currentDate, myntCard, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
+    else if (V_Type == "Privat") generatePrivatePDF(V_Type, name, currentDate, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
     else throw new Error("Incorrect V_Type");
   }
 
@@ -368,8 +366,9 @@ export default function Home() {
             <button
               type="submit"
               onClick={() => {
-                setDate(new Date().toISOString().split('T')[0]);
-                setShouldSubmit(true);
+                const today = new Date().toISOString().split('T')[0];
+                setDate(today); // still update state if you need it displayed elsewhere
+                submitForm(today); // call directly, in the same click event
               }}
               className="mt-2 self-center bg-gray-700 hover:bg-gray-800 text-gray-400 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
