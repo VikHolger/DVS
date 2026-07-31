@@ -3,7 +3,7 @@ name: 'Deploy Website'
 # Trigger Configuration
 on:
   push:
-    branches: ['public']
+    branches: ['main']
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -21,12 +21,13 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '22'
+          cache: 'npm'
       - name: 'Build Website'
         run: npm ci && npm run build
       - name: 'Upload artifact'
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./doc
+          path: ./
   # Deploy Job
   deploy:
     name: 'Deploy'
