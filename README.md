@@ -29,7 +29,7 @@ Digitala Verifikat system -  Ett enklare sett för sektionens medlemmar att fyll
 - [ ] V 1.0
     - [ ] Grafisk profil
     - [ ] Rättstavning
-    - [ ] Publicering
+    - [x] Publicering
 
 ## Hur du kan bidra
 Om du vill bidra, Skriv det ni vill lägga till under issues, eller om ni vill hjälpa till så kontakta Viktor, alt. skapa en pull request.
