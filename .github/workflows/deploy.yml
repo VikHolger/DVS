@@ -3,7 +3,7 @@ name: 'Deploy Website'
 # Trigger Configuration
 on:
   push:
-    branches: ['main']
+    branches: ['public']
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
