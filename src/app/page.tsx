@@ -167,13 +167,13 @@ export default function Home() {
               <button
                 type="button"
                 onClick={(e) => set_V_Type("Mynt")}
-                className="bg-gray-700 hover:bg-gray-800 text-gray-400 font-bold mx-1 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="button_common"
               > {t.myntButton} </button>
 
               <button
                 type="button"
                 onClick={(e) => set_V_Type("Privat")}
-                className="bg-gray-700 hover:bg-gray-800 text-gray-400 font-bold mx-1 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="button_common"
               > {t.privatButton} </button>
             </div>
           )}
@@ -409,11 +409,11 @@ export default function Home() {
           )}
 
           {descrition && !generatedBlob ? (
-              <button onClick={handleGenerateClick} disabled={isGenerating} className="...">
+              <button onClick={handleGenerateClick} disabled={isGenerating} className="button_common">
                 {isGenerating ? "Genererar..." : "Generera PDF"}
               </button>
             ) : descrition && generatedBlob && (
-              <button onClick={handleShareClick} className="...">
+              <button onClick={handleShareClick} className="button_common">
                 Dela PDF
               </button>
             )}

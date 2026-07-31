@@ -24,3 +24,7 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.button_common {
+  @apply bg-gray-700 hover:bg-gray-800 text-gray-400 font-bold mx-1 py-2 px-4 rounded focus:outline-none focus:shadow-outline;
+}
