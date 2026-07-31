@@ -1,7 +1,7 @@
 // next.config.ts
 import type { NextConfig } from "next";
 
-const basePath = "/your-repo-name";
+const basePath = "/DVS";
 
 const nextConfig: NextConfig = {
   output: "export",
