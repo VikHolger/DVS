@@ -1,11 +1,16 @@
+// next.config.ts
 import type { NextConfig } from "next";
+
+const basePath = "/your-repo-name";
 
 const nextConfig: NextConfig = {
   output: "export",
-  basePath: "/DVS",
-  assetPrefix: "/DVS",
-  images: {
-    unoptimized: true,
+  basePath,
+  assetPrefix: basePath,
+  trailingSlash: true,
+  images: { unoptimized: true },
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
   },
 };
 

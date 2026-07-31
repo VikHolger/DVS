@@ -3,11 +3,13 @@ import { generate } from '@pdfme/generator';
 import { text, line, rectangle, image } from '@pdfme/schemas';
 import { template } from './pdfTemplate';
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 const loadFonts = async (): Promise<Font> => {
   try {
     // Use absolute URLs for Next.js public folder
-    const fontUrl1 = '/fonts/Raleway-SemiBoldItalic.ttf';
-    const fontUrl2 = '/fonts/FiraCode-Regular.ttf';
+    const fontUrl1 = '${basePath}/fonts/Raleway-SemiBoldItalic.ttf';
+    const fontUrl2 = '${basePath}/fonts/FiraCode-Regular.ttf';
     
     console.log('Loading fonts from:', fontUrl1, fontUrl2);
     
