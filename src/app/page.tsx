@@ -112,11 +112,11 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black flex-col">
-      <header className='mb-2 flex w-full max-h-full justify-around pt-5 pb-5 flex-row'>
+      <header className='fixed top-0 left-0 right-0 mb-2 flex w-full max-h-full justify-around pt-5 pb-5 flex-row bg-gray-100 dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700'>
         <div className='flex gap-2 items-center'>
-          <p>
+          <a href="https://www.flygsektionen.se/" target="_self" rel="noopener noreferrer">
             Flygsektionens
-          </p>
+          </a>
         </div>
 
         <div className='flex gap-2 items-center'> 
@@ -143,8 +143,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex min-h-screen w-full max-w-3xl flex-col self-center items-center px-16 bg-white dark:bg-black sm:items-start">
-
+      <main className="mt-20 pt-5 flex min-h-screen w-full max-w-3xl flex-col self-center items-center px-16 rounded-xl bg-white dark:bg-black border-b border-gray-300 dark:border-gray-700 sm:items-start">
         
         <p className='self-center'>
           {t.welcome}
@@ -410,11 +409,11 @@ export default function Home() {
 
           {descrition && !generatedBlob ? (
               <button onClick={handleGenerateClick} disabled={isGenerating} className="button_common">
-                {isGenerating ? "Genererar..." : "Generera PDF"}
+                {isGenerating ? t.generating : t.generate}
               </button>
             ) : descrition && generatedBlob && (
               <button onClick={handleShareClick} className="button_common">
-                Dela PDF
+                t.sharePDF
               </button>
             )}
         </div>
