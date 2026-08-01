@@ -1,7 +1,7 @@
 export const sv = {
   // Site text
-  title: "DVS - Digitala Verifikat System",
-  welcome: "Hej och välkommen till DVS. Svara på frågorna nedan så skapas verifikatet åt dig",
+  title: "DVS",
+  welcome: "Hej och välkommen till DVS - Digital Verification System. Svara på frågorna nedan så skapas verifikatet åt dig",
   
   //Form
   enterName: "För & Efternamn",
@@ -27,6 +27,10 @@ export const sv = {
   descritionTitle: "Beskrivning:",
   mandatory: "(obligatorisk)",
   descrition: "Beskrivning om hur det användes",
+
+  generate: "Generera PDF",
+  generating: "Genererar...",
+  sharePDF: "Dela PDF",
 
   //Project names
   pr_104: "Styret",

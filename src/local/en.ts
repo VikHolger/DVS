@@ -1,7 +1,7 @@
 export const en = {
   // Site text
-  title: "DVS - Digital Verification System",
-  welcome: "Hello and welcome to DVS. Answer the questions below to create your verification",
+  title: "DVS",
+  welcome: "Hello and welcome to DVS - Digital Verification System. Answer the questions below to create your verification",
 
   //Form
   enterName: "Name & Surname",
@@ -27,6 +27,10 @@ export const en = {
   descritionTitle: "Descrition:",
   mandatory: "(mandatory)",
   descrition: "Description on how it is used",
+
+  generate: "Generate PDF",
+  generating: "Generating...",
+  sharePDF: "Share PDF",
 
   //Project names
   pr_104: "Board",

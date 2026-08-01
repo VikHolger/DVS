@@ -26,7 +26,16 @@ export default function Home() {
   const [projectNum, setProjectNum] = useState("");
   const [descrition, setDescrition] = useState("");
 
-  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  type UploadedFile = {
+    id: string;   // groups pages belonging to the same uploaded receipt
+    src: string;  // the actual image data URL
+  };
+
+  const [uploadedImages, setUploadedImages] = useState<UploadedFile[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
+
+  // Derived: count unique receipts, not pages
+  const numReceiptsCount = new Set(uploadedImages.map(img => img.id)).size;
 
   const [generatedBlob, setGeneratedBlob] = useState<Blob | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -41,19 +50,19 @@ export default function Home() {
     setDate(today);
 
     try {
-      const numReceipts = String(uploadedImages.length);
+      const numReceipts = String(numReceiptsCount);
+      const imageSrcs = uploadedImages.map(img => img.src);
       let blob: Blob;
       if (V_Type == "Mynt") {
-        blob = await generateMyntPDF(V_Type, name, today, myntCard, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
+        blob = await generateMyntPDF(V_Type, name, today, myntCard, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, imageSrcs);
       } else if (V_Type == "Privat") {
-        blob = await generatePrivatePDF(V_Type, name, today, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
+        blob = await generatePrivatePDF(V_Type, name, today, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, imageSrcs);
       } else {
         throw new Error("Incorrect V_Type");
       }
-    setGeneratedBlob(blob);
+      setGeneratedBlob(blob);
     } catch (err) {
       console.error("PDF generation failed:", err);
-      // optionally show an error message to the user here
     } finally {
       setIsGenerating(false);
     }
@@ -84,11 +93,29 @@ export default function Home() {
     URL.revokeObjectURL(url);
   }
 
-  function submitForm(currentDate: string) {
-    const numReceipts = String(uploadedImages.length);
-    if (V_Type == "Mynt") generateMyntPDF(V_Type, name, currentDate, myntCard, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
-    else if (V_Type == "Privat") generatePrivatePDF(V_Type, name, currentDate, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, uploadedImages);
-    else throw new Error("Incorrect V_Type");
+  async function convertPdfToImages(file: File): Promise<string[]> {
+    const pdfjsLib = await import('pdfjs-dist');
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
+
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    const images: string[] = [];
+
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+      const page = await pdf.getPage(pageNum);
+      const viewport = page.getViewport({ scale: 2 }); // 2x for decent print quality
+      const canvas = document.createElement('canvas');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      const context = canvas.getContext('2d');
+      if (!context) continue;
+
+      await page.render({ canvasContext: context, canvas, viewport }).promise;
+      images.push(canvas.toDataURL('image/png'));
+    }
+
+    return images;
   }
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,14 +123,38 @@ export default function Home() {
     if (!files) return;
 
     const fileArray = Array.from(files);
-    
-    fileArray.forEach(file => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setUploadedImages(prev => [...prev, reader.result as string]);
-      };
-      reader.readAsDataURL(file);
+    setIsUploading(true);
+
+    const processingPromises = fileArray.map((file) => {
+      const receiptId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+      if (file.type === 'application/pdf') {
+        return convertPdfToImages(file)
+          .then((pdfImages) => {
+            setUploadedImages(prev => [
+              ...prev,
+              ...pdfImages.map((src) => ({ id: receiptId, src })),
+            ]);
+          })
+          .catch((err) => {
+            console.error('Failed to convert PDF to images:', err);
+          });
+      }
+
+      return new Promise<void>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setUploadedImages(prev => [...prev, { id: receiptId, src: reader.result as string }]);
+          resolve();
+        };
+        reader.onerror = () => resolve();
+        reader.readAsDataURL(file);
+      });
     });
+
+    Promise.all(processingPromises).finally(() => setIsUploading(false));
+
+    e.target.value = ''; // allow re-selecting the same file(s)
   };
 
   const removeImage = (index: number) => {
@@ -112,11 +163,11 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black flex-col">
-      <header className='mb-2 flex w-full max-h-full justify-around pt-5 pb-5 flex-row'>
+      <header className='fixed top-0 left-0 right-0 mb-2 flex w-full max-h-full justify-around pt-5 pb-5 flex-row bg-gray-100 dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700'>
         <div className='flex gap-2 items-center'>
-          <p>
+          <a href="https://www.flygsektionen.se/" target="_self" rel="noopener noreferrer">
             Flygsektionens
-          </p>
+          </a>
         </div>
 
         <div className='flex gap-2 items-center'> 
@@ -143,8 +194,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex min-h-screen w-full max-w-3xl flex-col self-center items-center px-16 bg-white dark:bg-black sm:items-start">
-
+      <main className="mt-20 pt-5 flex min-h-screen w-full max-w-3xl flex-col self-center items-center px-16 rounded-xl bg-white dark:bg-black border-b border-gray-300 dark:border-gray-700 sm:items-start">
         
         <p className='self-center'>
           {t.welcome}
@@ -276,13 +326,26 @@ export default function Home() {
 
             {ammount && (
               <div className='flex flex-row items-center justify-center gap-2 mt-1'>
-                <label className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-                  Upload Images
+                <label className={`cursor-pointer text-white font-semibold py-2 px-4 rounded flex items-center gap-2 ${
+                  isUploading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+                }`}>
+                  {isUploading ? (
+                    <>
+                      <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                      </svg>
+                      Processing...
+                    </>
+                  ) : (
+                    'Upload Images or PDFs'
+                  )}
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/*,application/pdf"
                     multiple
                     onChange={handleImageUpload}
+                    disabled={isUploading}
                     className="hidden"
                   />
                 </label>
@@ -291,12 +354,14 @@ export default function Home() {
 
             {uploadedImages.length > 0 && (
               <div className='mt-3 w-full'>
-                <p className='text-sm font-semibold mb-2'>Uploaded Images ({uploadedImages.length}):</p>
+                <p className='text-sm font-semibold mb-2'>
+                  {numReceiptsCount} receipt{numReceiptsCount !== 1 ? 's' : ''} ({uploadedImages.length} page{uploadedImages.length !== 1 ? 's' : ''}):
+                </p>
                 <div className='grid grid-cols-3 gap-2'>
                   {uploadedImages.map((img, index) => (
                     <div key={index} className='relative group'>
                       <img 
-                        src={img} 
+                        src={img.src} 
                         alt={`Upload ${index + 1}`}
                         className='w-full h-24 object-cover rounded border border-gray-300'
                       />
@@ -410,11 +475,11 @@ export default function Home() {
 
           {descrition && !generatedBlob ? (
               <button onClick={handleGenerateClick} disabled={isGenerating} className="button_common">
-                {isGenerating ? "Genererar..." : "Generera PDF"}
+                {isGenerating ? t.generating : t.generate}
               </button>
             ) : descrition && generatedBlob && (
               <button onClick={handleShareClick} className="button_common">
-                Dela PDF
+                t.sharePDF
               </button>
             )}
         </div>
