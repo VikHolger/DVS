@@ -208,7 +208,8 @@ export default function Home() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder={t.enterName}
-              className="px-4 py-2 min-w-1/2 border text-center border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
+              className="text_field"
+              //className="px-4 py-2 min-w-1/2 border text-center border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
               />
           </div>
 
@@ -229,7 +230,7 @@ export default function Home() {
           )}
 
           {V_Type == "Mynt" && ( //Detaljer om Mynt
-            <div className='Your_Details min-w-full flex flex-col self-center items-center justify-around m-2 py-2 border rounded-xl'>
+            <div className='Your_Details section'>
               <p className='text-xl underline'>
                 {V_Type}
               </p>
@@ -242,7 +243,8 @@ export default function Home() {
                 <select 
                   value={myntCard} 
                   onChange={(e) => setMyntCard(e.target.value)}
-                  className="px-4 py-2 max-md:max-h-10 self-center border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 "
+                  className="multi_choice_button max-md:max-h-10"
+                  //className="px-4 py-2 max-md:max-h-10 self-center border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 "
                 >
                   <option value="---" hidden>---</option>
                   <option value="CASH">CASH</option>
@@ -254,7 +256,7 @@ export default function Home() {
           )}
 
           {V_Type == "Privat" && ( // Detaljer om personens bank
-            <div className='Your_Details min-w-full flex flex-col self-center items-center justify-around m-2 py-2 border rounded-xl'>
+            <div className='Your_Details section'>
               <p className='text-xl underline'>
                 {V_Type}
               </p>
@@ -264,7 +266,8 @@ export default function Home() {
                 value={bankName}
                 onChange={(e) => setBankName(e.target.value)}
                 placeholder={t.bankName}
-                className="px-4 py-2 min-w-1/2 border mt-2 text-center border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
+                className="text_field"
+                //className="px-4 py-2 min-w-1/2 border mt-2 text-center border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
               />
 
               {bankName && (
@@ -279,7 +282,8 @@ export default function Home() {
                       }
                     }}
                     placeholder={t.clearing}
-                    className="px-4 py-2 max-w-1/5 mr-2 border text-center border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
+                    className="text_field max-w-1/5"
+                    //className="px-4 py-2 max-w-1/5 mr-2 border text-center border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
                   />
 
                   <input
@@ -292,7 +296,8 @@ export default function Home() {
                       }
                     }}
                     placeholder={t.bankNr}
-                    className="px-4 py-2 min-w-3/5 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
+                    className="text_field min-w-3/5"
+                    //className="px-4 py-2 min-w-3/5 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
                   />
                 </div>
               )}
@@ -301,7 +306,7 @@ export default function Home() {
           )}
 
           {((V_Type == "Mynt" && myntCard != "---") || (V_Type == "Privat" && clearing && bankNum)) && ( // Detaljer om köpet i sig
-            <div className='min-w-full flex flex-col self-center items-center justify-around m-2 py-2 border rounded-xl'>
+            <div className='section'>
               <p className='text-xl underline'>
                 {t.buyData}
               </p>
@@ -316,7 +321,8 @@ export default function Home() {
                   }
                 }}
                 placeholder={t.ammount}
-                className="px-4 py-2 max-w-2/5 border text-center flex border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
+                className="text_field max-w-2/5" 
+                //className="px-4 py-2 max-w-2/5 border text-center flex border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
               />
 
               <p className='flex pl-2'>
@@ -326,8 +332,8 @@ export default function Home() {
 
             {ammount && (
               <div className='flex flex-row items-center justify-center gap-2 mt-1'>
-                <label className={`cursor-pointer text-white font-semibold py-2 px-4 rounded flex items-center gap-2 ${
-                  isUploading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+                <label className={`button_common cursor-pointer text-white font-semibold py-2 px-4 rounded flex items-center gap-2 ${
+                  isUploading ? 'bg-gray-900 cursor-not-allowed' : 'hover:bg-blue-700'
                 }`}>
                   {isUploading ? (
                     <>
@@ -387,7 +393,8 @@ export default function Home() {
                   max={new Date().toISOString().split('T')[0]}
                   value={purchaseDate}
                   onChange={(e) => setPurchaseDate(e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
+                  className="text_field min-w-1/4"
+                  //className="px-4 py-2 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
                 />
               </div>
             )}
@@ -395,8 +402,8 @@ export default function Home() {
           </div>
           )}
 
-          {purchaseDate && (
-            <div className='min-w-full flex flex-col self-center items-center justify-around m-4 pt-2 pb-4 border rounded-xl'>
+          {uploadedImages.length > 0 && (
+            <div className='section'>
               <p className='text-xl underline'>
                 {t.buyUsage}
               </p>
@@ -426,7 +433,8 @@ export default function Home() {
                   <select 
                     value={budgetManager} 
                     onChange={(e) => setBudgetManager(e.target.value)}
-                    className="px-4 py-2 border self-center border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
+                    className="multi_choice_button"
+                    //className="px-4 py-2 border self-center border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
                   >
                     <option value="---" hidden>---</option>
                     {budgetManagers.map((option) => (
@@ -441,7 +449,8 @@ export default function Home() {
                       <select 
                         value={projectNum} 
                         onChange={(e) => setProjectNum(e.target.value)}
-                        className="px-4 py-2 mt-1 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
+                        className="multi_choice_button"
+                        //className="px-4 py-2 mt-1 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
                       >
                         <option value="---" hidden>---</option>
                         {projectsMap.get(budgetManager)?.map((option) => (
@@ -455,19 +464,16 @@ export default function Home() {
                 </div>
                 
                 <div className=''>
-                {purchaseDate && (
                   <div>
-                    
-                    
                     <textarea
                       value={descrition}
                       onChange={(e) => setDescrition(e.target.value)}
                       placeholder={t.descrition}
                       rows={4}
-                      className="px-2 py-2 mt-1 w-full border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400 resize-none"
+                      className="text_field w-full"
+                      //className="px-2 py-2 mt-1 w-full border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400 resize-none"
                     />
                   </div>
-                )}
                 </div>
               </div>
             </div>
@@ -479,7 +485,7 @@ export default function Home() {
               </button>
             ) : descrition && generatedBlob && (
               <button onClick={handleShareClick} className="button_common">
-                t.sharePDF
+                {t.sharePDF}
               </button>
             )}
         </div>

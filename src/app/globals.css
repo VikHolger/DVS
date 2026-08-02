@@ -25,6 +25,34 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.section {
+  @apply py-5 my-1 min-w-full flex flex-col self-center items-center justify-around;
+
+  border-radius: 15px;
+  background: linear-gradient(90deg, rgba(8, 175, 64, 0.50) 0%, rgba(139, 255, 228, 0.50) 100%);
+}
+
+.text_field {
+  @apply text-center mr-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+
+  padding: 0.25rem;
+
+  border-radius: 10px 10px 0 0;
+  border-bottom: 1px solid #000;
+  background: linear-gradient(90deg, rgba(141, 141, 141, 0.30) 0%, rgba(200, 196, 196, 0.30) 100%);
+}
+
+.multi_choice_button {
+  @apply my-0.5 px-4 py-2 text-center focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+
+  border-radius: 10px;
+  border: 1px solid #000;
+  background: linear-gradient(90deg, rgba(141, 141, 141, 0.30) 0%, rgba(200, 196, 196, 0.30) 100%);
+}
+
 .button_common {
-  @apply cursor-pointer bg-blue-700 hover:bg-blue-900 text-white font-bold mx-1 py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-300;
+  @apply cursor-pointer hover:bg-blue-900 text-white font-bold mx-1 py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-300;
+
+  border-radius: 20px;
+  background: linear-gradient(90deg, rgba(0, 106, 255, 0.84) 0%, rgba(0, 177, 177, 0.90) 100%), rgba(0, 56, 120, 0.05);
 }
