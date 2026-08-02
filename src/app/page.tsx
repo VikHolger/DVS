@@ -200,7 +200,7 @@ export default function Home() {
           {t.welcome}
         </p>
 
-        <div className='Form flex flex-col min-w-9/12 self-center item-center'>
+        <div className='form flex flex-col min-w-9/12 self-center item-center'>
 
           <div className='flex flex-col self-center items-center pt-5'>
             <input
@@ -359,7 +359,7 @@ export default function Home() {
             )}
 
             {uploadedImages.length > 0 && (
-              <div className='mt-3 w-full'>
+              <div className='mt-3 p-3 w-full'>
                 <p className='text-sm font-semibold mb-2'>
                   {numReceiptsCount} receipt{numReceiptsCount !== 1 ? 's' : ''} ({uploadedImages.length} page{uploadedImages.length !== 1 ? 's' : ''}):
                 </p>
@@ -409,7 +409,7 @@ export default function Home() {
               </p>
 
               <div className='min-w-full flex flex-row self-center items-center justify-around mb-2'>
-                <div className='flex flex-col self-center items-center justify-center'>
+                <div className='flex flex-col min-w-2/5 self-center items-center justify-center'>
                   <p className='flex self-center'>
                     {t.budChief}
                   </p>
@@ -418,7 +418,7 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div className='flex flex-col self-center items-center justify-center'>
+                <div className='flex flex-col min-w-3/5 self-center items-center justify-center'>
                   <p className='flex self-center'>
                     {t.descritionTitle}
                   </p>
@@ -429,7 +429,7 @@ export default function Home() {
               </div>
               
               <div className='min-w-full flex flex-row self-center items-center justify-around'>
-                <div className='flex flex-col items-center'>
+                <div className='flex flex-col min-w-2/5 self-center items-center p-2'>
                   <select 
                     value={budgetManager} 
                     onChange={(e) => setBudgetManager(e.target.value)}
@@ -445,17 +445,17 @@ export default function Home() {
                   </select>
 
                   {budgetManager && budgetManager != "---" && (
-                    <div>
+                    <div className='flex flex-col min-w-2/5 self-center items-center p-2'>
                       <select 
                         value={projectNum} 
                         onChange={(e) => setProjectNum(e.target.value)}
-                        className="multi_choice_button"
+                        className="multi_choice_button max-w-1/2"
                         //className="px-4 py-2 mt-1 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
                       >
                         <option value="---" hidden>---</option>
                         {projectsMap.get(budgetManager)?.map((option) => (
                           <option key={option.value} value={option.value}>
-                            {[option.labelKey]}
+                            {t[option.labelKey as keyof typeof t]}
                           </option>
                         ))}
                       </select>
@@ -463,7 +463,7 @@ export default function Home() {
                   )}
                 </div>
                 
-                <div className=''>
+                <div className='min-w-3/5 p-2 self-center items-center'>
                   <div>
                     <textarea
                       value={descrition}
@@ -480,11 +480,11 @@ export default function Home() {
           )}
 
           {descrition && !generatedBlob ? (
-              <button onClick={handleGenerateClick} disabled={isGenerating} className="button_common">
+              <button onClick={handleGenerateClick} disabled={isGenerating} className="button_common mt-1 mb-3">
                 {isGenerating ? t.generating : t.generate}
               </button>
             ) : descrition && generatedBlob && (
-              <button onClick={handleShareClick} className="button_common">
+              <button onClick={handleShareClick} className="button_common mt-1 mb-3">
                 {t.sharePDF}
               </button>
             )}
