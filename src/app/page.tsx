@@ -5,6 +5,8 @@ import { translations, Language } from '@/local';
 import { budgetManagers, projectsMap } from '@/local/budgetStructure';
 import { generateMyntPDF, generatePrivatePDF } from '@/local/pdfScripts';
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export default function Home() {
   const [language, setLanguage] = useState<Language>("sv");
   const t = translations[language];
@@ -95,7 +97,6 @@ export default function Home() {
 
   async function convertPdfToImages(file: File): Promise<string[]> {
     const pdfjsLib = await import('pdfjs-dist');
-    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
     pdfjsLib.GlobalWorkerOptions.workerSrc = `${basePath}/pdf.worker.min.mjs`;
 
     const arrayBuffer = await file.arrayBuffer();
@@ -163,40 +164,48 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black flex-col">
-      <header className='fixed top-0 left-0 right-0 mb-2 flex w-full max-h-full justify-around pt-5 pb-5 flex-row bg-gray-100 dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700'>
-        <div className='flex gap-2 items-center'>
+      <header className='header fixed top-0 left-0 right-0 mb-2 flex w-full max-h-full items-center justify-between pt-5 pb-5 flex-row bg-gray-100 dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 relative'>
+        <div className='padding_left_device'>
           <a href="https://www.flygsektionen.se/" target="_self" rel="noopener noreferrer">
-            <div>
-              Flygsektionens
+            <div className='flex flex-row gap-2 items-center'>
+              <img
+                src={`${basePath}/images/bevingade_skrovet.svg`}
+                alt=""
+                height="10"
+                className="block dark:hidden"
+              />
+
+              <img
+                src={`${basePath}/images/bevingade_skrovet_inverted.svg`}
+                alt=""
+                height="10"
+                className="hidden dark:block"
+              />
+
+              <p className='flygsektionen_text'>
+                Flygsektionens
+              </p>
             </div>
           </a>
         </div>
 
-        <div className='flex gap-2 items-center'> 
-          <h1 className=" text-xl self-center underline pb-1">
-          {t.title}
+        <div className='absolute left-1/2 -translate-x-1/2  pt-1 flex gap-2 items-center'>
+          <h1 className="title">
+            {t.title}
           </h1>
         </div>
-        
-        <div className="flex gap-2 items-center">
-          <button onClick={() => setLanguage("sv")} className="w-6 h-4">
-            <img 
-              src="https://flagcdn.com/w40/se.png" 
-              alt="Swedish"
-              className="w-full h-full object-cover"
-            />
+
+        <div className="padding_right_device">
+          <button onClick={() => setLanguage("sv")} className="w-8 h-5">
+            <img src="https://flagcdn.com/w40/se.png" alt="Swedish" className="w-full h-full object-cover" />
           </button>
-          <button onClick={() => setLanguage("en")} className="w-6 h-4">
-            <img 
-              src="https://flagcdn.com/w40/gb.png" 
-              alt="English"
-              className="w-full h-full object-cover"
-            />
+          <button onClick={() => setLanguage("en")} className="w-8 h-5">
+            <img src="https://flagcdn.com/w40/gb.png" alt="English" className="w-full h-full object-cover" />
           </button>
         </div>
       </header>
 
-      <main className="mt-20 pt-5 flex min-h-screen w-full max-w-3xl flex-col self-center items-center px-16 rounded-xl bg-white dark:bg-black border-b border-gray-300 dark:border-gray-700 sm:items-start">
+      <main className="bodyMargin pt-5 flex min-h-screen w-full max-w-3xl flex-col self-center items-center px-16 rounded-xl bg-white dark:bg-black border-b border-gray-300 dark:border-gray-700 sm:items-start">
         
         <p className='self-center'>
           {t.welcome}
@@ -410,7 +419,7 @@ export default function Home() {
                 {t.buyUsage}
               </p>
 
-              <div className='min-w-full flex flex-row self-center items-center justify-around mb-2'>
+              <div className='min-w-full flex stack_or_row self-center items-center justify-around mb-2'>
                 <div className='flex flex-col min-w-2/5 self-center items-center justify-center'>
                   <p className='flex self-center'>
                     {t.budChief}
@@ -418,6 +427,40 @@ export default function Home() {
                   <p className='flex self-center text-xs'>
                     {t.buyIfUCan}
                   </p>
+
+                  <div className='flex flex-col min-w-2/5 self-center items-center px-2'>
+                    <select 
+                      value={budgetManager} 
+                      onChange={(e) => setBudgetManager(e.target.value)}
+                      className="multi_choice_button"
+                      //className="px-4 py-2 border self-center border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
+                    >
+                      <option value="---" hidden>---</option>
+                      {budgetManagers.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+
+                    {budgetManager && budgetManager != "---" && (
+                      <div className='flex flex-col min-w-2/5 self-center items-center p-2'>
+                        <select 
+                          value={projectNum} 
+                          onChange={(e) => setProjectNum(e.target.value)}
+                          className="multi_choice_button max-w-1/2"
+                          //className="px-4 py-2 mt-1 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
+                        >
+                          <option value="---" hidden>---</option>
+                          {projectsMap.get(budgetManager)?.map((option) => (
+                            <option key={option.value} value={option.value}>
+                              {t[option.labelKey as keyof typeof t]}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className='flex flex-col min-w-3/5 self-center items-center justify-center'>
@@ -427,54 +470,17 @@ export default function Home() {
                   <p className='flex self-center text-xs'>
                     {t.mandatory}
                   </p>
-                </div>
-              </div>
-              
-              <div className='min-w-full flex flex-row self-center items-center justify-around'>
-                <div className='flex flex-col min-w-2/5 self-center items-center px-2'>
-                  <select 
-                    value={budgetManager} 
-                    onChange={(e) => setBudgetManager(e.target.value)}
-                    className="multi_choice_button"
-                    //className="px-4 py-2 border self-center border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
-                  >
-                    <option value="---" hidden>---</option>
-                    {budgetManagers.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-
-                  {budgetManager && budgetManager != "---" && (
-                    <div className='flex flex-col min-w-2/5 self-center items-center p-2'>
-                      <select 
-                        value={projectNum} 
-                        onChange={(e) => setProjectNum(e.target.value)}
-                        className="multi_choice_button max-w-1/2"
-                        //className="px-4 py-2 mt-1 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
-                      >
-                        <option value="---" hidden>---</option>
-                        {projectsMap.get(budgetManager)?.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {t[option.labelKey as keyof typeof t]}
-                          </option>
-                        ))}
-                      </select>
+                  <div className='min-w-3/5 p-2 self-center items-center'>
+                    <div>
+                      <textarea
+                        value={descrition}
+                        onChange={(e) => setDescrition(e.target.value)}
+                        placeholder={t.descrition}
+                        rows={4}
+                        className="text_field w-full"
+                        //className="px-2 py-2 mt-1 w-full border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400 resize-none"
+                      />
                     </div>
-                  )}
-                </div>
-                
-                <div className='min-w-3/5 p-2 self-center items-center'>
-                  <div>
-                    <textarea
-                      value={descrition}
-                      onChange={(e) => setDescrition(e.target.value)}
-                      placeholder={t.descrition}
-                      rows={4}
-                      className="text_field w-full"
-                      //className="px-2 py-2 mt-1 w-full border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400 resize-none"
-                    />
                   </div>
                 </div>
               </div>
