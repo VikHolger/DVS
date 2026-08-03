@@ -18,12 +18,16 @@ export const sv = {
 
   buyData: "Information om köpet",
   ammount:"Belopp",
+  valuta: "kr",
   purchased: "Köptes den",
   numReceipts: "Antal kvitton",
 
+  process_recipts: "Bearbetar kvitton...",
+  upload_recipts: "Ladda upp bilder eller PDF",
+
   budChief: "Budget ansvarig:",
   buyIfUCan: "(ej obligatorisk)",
-   buyUsage: "Köpets ändamål",
+  buyUsage: "Köpets ändamål",
   descritionTitle: "Beskrivning:",
   mandatory: "(obligatorisk)",
   descrition: "Beskrivning om hur det användes",
