@@ -166,7 +166,9 @@ export default function Home() {
       <header className='fixed top-0 left-0 right-0 mb-2 flex w-full max-h-full justify-around pt-5 pb-5 flex-row bg-gray-100 dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700'>
         <div className='flex gap-2 items-center'>
           <a href="https://www.flygsektionen.se/" target="_self" rel="noopener noreferrer">
-            Flygsektionens
+            <div>
+              Flygsektionens
+            </div>
           </a>
         </div>
 
@@ -266,7 +268,7 @@ export default function Home() {
                 value={bankName}
                 onChange={(e) => setBankName(e.target.value)}
                 placeholder={t.bankName}
-                className="text_field"
+                className="text_field mt-1"
                 //className="px-4 py-2 min-w-1/2 border mt-2 text-center border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-400"
               />
 
@@ -311,7 +313,7 @@ export default function Home() {
                 {t.buyData}
               </p>
 
-            <div className='flex flex-row items-center justify-center mt-2'>
+            <div className='flex flex-row items-center justify-center mt-2 mb-1'>
               <input
                 type="text"
                 value={ammount}
@@ -326,7 +328,7 @@ export default function Home() {
               />
 
               <p className='flex pl-2'>
-                kr
+                {t.valuta}
               </p>
             </div>
 
@@ -341,10 +343,10 @@ export default function Home() {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
                       </svg>
-                      Processing...
+                      {t.process_recipts}
                     </>
                   ) : (
-                    'Upload Images or PDFs'
+                    t.upload_recipts
                   )}
                   <input
                     type="file"
@@ -429,7 +431,7 @@ export default function Home() {
               </div>
               
               <div className='min-w-full flex flex-row self-center items-center justify-around'>
-                <div className='flex flex-col min-w-2/5 self-center items-center p-2'>
+                <div className='flex flex-col min-w-2/5 self-center items-center px-2'>
                   <select 
                     value={budgetManager} 
                     onChange={(e) => setBudgetManager(e.target.value)}
@@ -481,7 +483,17 @@ export default function Home() {
 
           {descrition && !generatedBlob ? (
               <button onClick={handleGenerateClick} disabled={isGenerating} className="button_common mt-1 mb-3">
-                {isGenerating ? t.generating : t.generate}
+                {isGenerating ? (
+                    <div className="flex items-center gap-2 items-center justify-center">
+                      <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                      </svg>
+                      {t.generating}
+                    </div>
+                  ) : (
+                    t.generate
+                  )}
               </button>
             ) : descrition && generatedBlob && (
               <button onClick={handleShareClick} className="button_common mt-1 mb-3">

@@ -18,18 +18,22 @@ export const en = {
 
   buyData: "Information about the purchase",
   ammount: "Amount",
+  valuta: "SEK",
   purchased: "Purchased on",
   numReceipts: "Number of receipts",
 
+  process_recipts: "Processing receipts...",
+  upload_recipts: "Upload Images or PDFs",
+
   budChief: "Budget maneger:",
-  buyIfUCan: "(Optional, but helps us if you know it)",
+  buyIfUCan: "(Optional)",
   buyUsage: "Usage of the purchase",
   descritionTitle: "Descrition:",
-  mandatory: "(mandatory)",
+  mandatory: "(Mandatory)",
   descrition: "Description on how it is used",
 
-  generate: "Generate PDF",
   generating: "Generating...",
+  generate: "Generate PDF",
   sharePDF: "Share PDF",
 
   //Project names
