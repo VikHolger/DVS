@@ -25,7 +25,6 @@ export default function Home() {
   const [purchaseDate, setPurchaseDate] = useState(""); 
 
   const [budgetManager, setBudgetManager] = useState("");
-  const [projectNum, setProjectNum] = useState("");
   const [descrition, setDescrition] = useState("");
 
   type UploadedFile = {
@@ -56,9 +55,9 @@ export default function Home() {
       const imageSrcs = uploadedImages.map(img => img.src);
       let blob: Blob;
       if (V_Type == "Mynt") {
-        blob = await generateMyntPDF(V_Type, name, today, myntCard, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, imageSrcs);
+        blob = await generateMyntPDF(V_Type, name, today, myntCard, ammount, numReceipts, purchaseDate, budgetManager, descrition, imageSrcs);
       } else if (V_Type == "Privat") {
-        blob = await generatePrivatePDF(V_Type, name, today, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, imageSrcs);
+        blob = await generatePrivatePDF(V_Type, name, today, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, descrition, imageSrcs);
       } else {
         throw new Error("Incorrect V_Type");
       }
@@ -442,24 +441,6 @@ export default function Home() {
                         </option>
                       ))}
                     </select>
-
-                    {budgetManager && budgetManager != "---" && (
-                      <div className='flex flex-col min-w-2/5 self-center items-center p-2'>
-                        <select 
-                          value={projectNum} 
-                          onChange={(e) => setProjectNum(e.target.value)}
-                          className="multi_choice_button max-w-1/2"
-                          //className="px-4 py-2 mt-1 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
-                        >
-                          <option value="---" hidden>---</option>
-                          {projectsMap.get(budgetManager)?.map((option) => (
-                            <option key={option.value} value={option.value}>
-                              {t[option.labelKey as keyof typeof t]}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    )}
                   </div>
                 </div>
 

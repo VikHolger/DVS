@@ -54,8 +54,7 @@ export async function generateMyntPDF(
   ammount: string, 
   numReceipts: string, 
   purchaseDate: string, 
-  budgetManager: string, 
-  projectNum: string, 
+  budgetManager: string,
   descrition: string,
   images: string[] = []
 ): Promise<Blob> {
@@ -74,7 +73,6 @@ export async function generateMyntPDF(
     numReceipts: String(numReceipts || images.length),
     descrition: String(descrition || ''),
     budgetManager: String(budgetManager || ''),
-    projectNum: String(projectNum || ''),
   };
 
   images.forEach((imageData, i) => {
@@ -146,8 +144,7 @@ export async function generatePrivatePDF(
   ammount: string, 
   numReceipts: string, 
   purchaseDate: string, 
-  budgetManager: string, 
-  projectNum: string, 
+  budgetManager: string,
   descrition: string,
   images: string[] = []
 ) : Promise<Blob>  {
@@ -170,7 +167,6 @@ export async function generatePrivatePDF(
     numReceipts: String(numReceipts || images.length),
     descrition: String(descrition || ''),
     budgetManager: String(budgetManager || ''),
-    projectNum: String(projectNum || ''),
   };
 
   // Add one input object per image page
