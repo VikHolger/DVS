@@ -2,7 +2,8 @@ import type { Template } from '@pdfme/common';
 import { text, line, rectangle } from '@pdfme/schemas';
 
 export const template: Template = {
-    "schemas":[[
+  "schemas": [
+    [
       {
         "name": "V_Type",
         "type": "text",
@@ -225,10 +226,10 @@ export const template: Template = {
         "type": "text",
         "content": "",
         "position": {
-          "x": 101.89,
+          "x": 105.18,
           "y": 149.55
         },
-        "width": 27.52,
+        "width": 22.49,
         "height": 7.14,
         "rotate": 0,
         "alignment": "center",
@@ -242,7 +243,9 @@ export const template: Template = {
         "strikethrough": false,
         "underline": false,
         "required": false,
-        "readOnly": false
+        "readOnly": false,
+        "fontName": "Roboto",
+        "overflow": "visible"
       },
       {
         "name": "budgetManager",
@@ -294,79 +297,30 @@ export const template: Template = {
         "readOnly": false
       },
       {
-        "name": "field1",
-        "type": "text",
-        "content": "Auto created by DVS",
-        "position": {
-          "x": 10.02,
-          "y": 21.06
-        },
-        "width": 189.97,
-        "height": 6.09,
-        "rotate": 0,
-        "alignment": "center",
-        "verticalAlignment": "top",
-        "fontSize": 16,
-        "lineHeight": 1,
-        "characterSpacing": 2,
-        "fontColor": "#000000",
-        "fontName": "code",
-        "backgroundColor": "",
-        "opacity": 1,
-        "strikethrough": false,
-        "underline": true,
-        "required": false,
-        "readOnly": true
-      },
-      {
         "name": "field4",
         "type": "text",
-        "content": "DVS (Digitala Verifikat System) creates supporting documents for receipts.\n\nMore information about DVS can be found at github.com/VikHolger/DVS",
+        "content": "8 8888     ,88'  ,o888888o.     b.             8     ,o888888o.    8 8888          8 8888     ,o888888o.          .8.                    8 8888888888   8 8888  `8.`8888.      ,8'  ,o888888o.      d888888o.   8 8888888888   8 8888     ,88' 8888888 8888888888  8 8888     ,o888888o.     b.             8 8 8888888888   b.             8 \n8 8888    ,88'. 8888     `88.   888o.          8    8888     `88.  8 8888          8 8888    8888     `88.       .888.                   8 8888         8 8888   `8.`8888.    ,8'  8888     `88.  .`8888:' `88. 8 8888         8 8888    ,88'        8 8888        8 8888  . 8888     `88.   888o.          8 8 8888         888o.          8 \n8 8888   ,88',8 8888       `8b  Y88888o.       8 ,8 8888       `8. 8 8888          8 8888 ,8 8888       `8.     :88888.                  8 8888         8 8888    `8.`8888.  ,8',8 8888       `8. 8.`8888.   Y8 8 8888         8 8888   ,88'         8 8888        8 8888 ,8 8888       `8b  Y88888o.       8 8 8888         Y88888o.       8 \n8 8888  ,88' 88 8888        `8b .`Y888888o.    8 88 8888           8 8888          8 8888 88 8888              . `88888.                 8 8888         8 8888     `8.`8888.,8' 88 8888           `8.`8888.     8 8888         8 8888  ,88'          8 8888        8 8888 88 8888        `8b .`Y888888o.    8 8 8888         .`Y888888o.    8 \n8 8888 ,88'  88 8888         88 8o. `Y888888o. 8 88 8888           8 8888          8 8888 88 8888             .8. `88888.                8 888888888888 8 8888      `8.`88888'  88 8888            `8.`8888.    8 888888888888 8 8888 ,88'           8 8888        8 8888 88 8888         88 8o. `Y888888o. 8 8 888888888888 8o. `Y888888o. 8 \n8 8888 88'   88 8888         88 8`Y8o. `Y88888o8 88 8888           8 8888          8 8888 88 8888            .8`8. `88888.               8 8888         8 8888       `8. 8888   88 8888             `8.`8888.   8 8888         8 8888 88'            8 8888        8 8888 88 8888         88 8`Y8o. `Y88888o8 8 8888         8`Y8o. `Y88888o8 \n8 888888<    88 8888        ,8P 8   `Y8o. `Y8888 88 8888   8888888 8 8888          8 8888 88 8888   8888888 .8' `8. `88888.              8 8888         8 8888        `8 8888   88 8888   8888888    `8.`8888.  8 8888         8 888888<             8 8888        8 8888 88 8888        ,8P 8   `Y8o. `Y8888 8 8888         8   `Y8o. `Y8888 \n8 8888 `Y8.  `8 8888       ,8P  8      `Y8o. `Y8 `8 8888       .8' 8 8888          8 8888 `8 8888       .8'.8'   `8. `88888.             8 8888         8 8888         8 8888   `8 8888       .8'8b   `8.`8888. 8 8888         8 8888 `Y8.           8 8888        8 8888 `8 8888       ,8P  8      `Y8o. `Y8 8 8888         8      `Y8o. `Y8 \n8 8888   `Y8. ` 8888     ,88'   8         `Y8o.`    8888     ,88'  8 8888          8 8888    8888     ,88'.888888888. `88888.            8 8888         8 8888         8 8888      8888     ,88' `8b.  ;8.`8888 8 8888         8 8888   `Y8.         8 8888        8 8888  ` 8888     ,88'   8         `Y8o.` 8 8888         8         `Y8o.` \n8 8888     `Y8.  `8888888P'     8            `Yo     `8888888P'    8 888888888888  8 8888     `8888888P' .8'       `8. `88888.           8 8888         8 888888888888 8 8888       `8888888P'    `Y8888P ,88P' 8 888888888888 8 8888     `Y8.       8 8888        8 8888     `8888888P'     8            `Yo 8 888888888888 8            `Yo",
         "position": {
           "x": 11.32,
-          "y": 28.46
+          "y": 21.58
         },
         "width": 187.59,
-        "height": 19.84,
+        "height": 43.39,
         "rotate": 0,
-        "alignment": "center",
-        "verticalAlignment": "top",
-        "fontSize": 13,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "fontSize": 3.5,
         "lineHeight": 1,
         "characterSpacing": 0,
         "fontColor": "#000000",
-        "fontName": "code",
+        "fontName": "Arial",
         "backgroundColor": "",
         "opacity": 1,
         "strikethrough": false,
         "underline": false,
         "required": false,
-        "readOnly": true
-      },
-      {
-        "name": "field5",
-        "type": "text",
-        "content": "Kongliga Flygsektionen",
-        "position": {
-          "x": 17.15,
-          "y": 56.25
-        },
-        "width": 150,
-        "height": 10.05,
-        "rotate": 0,
-        "alignment": "left",
-        "verticalAlignment": "top",
-        "fontSize": 22,
-        "lineHeight": 1,
-        "characterSpacing": 0,
-        "fontColor": "#0056b6",
-        "fontName": "rale_title",
-        "backgroundColor": "",
-        "opacity": 1,
-        "strikethrough": false,
-        "underline": false,
-        "required": false,
-        "readOnly": true
+        "readOnly": true,
+        "overflow": "visible"
       },
       {
         "name": "field6",
@@ -467,15 +421,15 @@ export const template: Template = {
       {
         "name": "field7 copy 3",
         "type": "text",
-        "content": "Personlig",
+        "content": "Privat utlägg",
         "position": {
-          "x": 136.37,
+          "x": 89.28,
           "y": 110.19
         },
-        "width": 21.43,
+        "width": 108.21,
         "height": 5.82,
         "rotate": 0,
-        "alignment": "left",
+        "alignment": "center",
         "verticalAlignment": "top",
         "fontSize": 13,
         "lineHeight": 1,
@@ -612,7 +566,7 @@ export const template: Template = {
       {
         "name": "field7 copy 9",
         "type": "text",
-        "content": "Antal Kvitton:",
+        "content": "Antal kvitton:",
         "position": {
           "x": 73,
           "y": 150
@@ -733,18 +687,18 @@ export const template: Template = {
       {
         "name": "field39",
         "type": "text",
-        "content": "CASH: cash@t.kth.se\nKBM: kbm@t.kth.se\nEKO: eko-mottagningen@t.kth.se\nJUBELCASH:",
+        "content": "CASH: cash@t.kth.se\nKBM: kbm@t.kth.se\nEKO: eko-mottagningen@t.kth.se\nJUBELCASH: jubelcash@t.kth.se",
         "position": {
           "x": 134.08,
           "y": 174.52
         },
         "width": 63.5,
-        "height": 14.02,
+        "height": 26.99,
         "rotate": 0,
         "alignment": "right",
         "verticalAlignment": "top",
         "fontSize": 11,
-        "lineHeight": 1,
+        "lineHeight": 1.3,
         "characterSpacing": 0,
         "fontColor": "#000000",
         "backgroundColor": "",
@@ -752,7 +706,9 @@ export const template: Template = {
         "strikethrough": false,
         "underline": false,
         "required": false,
-        "readOnly": true
+        "readOnly": true,
+        "fontName": "Roboto",
+        "overflow": "visible"
       },
       {
         "name": "field39 copy",
@@ -807,11 +763,11 @@ export const template: Template = {
         "type": "text",
         "content": "Detta verifikat bör skickas till respektive ansvarig enligt mailaddresserna ovanför.\n\nVid frågor om ett kvittos giltighet, kontakta respektive ekonomiansvarig.",
         "position": {
-          "x": 133,
-          "y": 192
+          "x": 132.97,
+          "y": 203.76
         },
-        "width": 64,
-        "height": 62.5,
+        "width": 64.03,
+        "height": 49.74,
         "rotate": 0,
         "alignment": "left",
         "verticalAlignment": "middle",
@@ -824,23 +780,9 @@ export const template: Template = {
         "strikethrough": false,
         "underline": false,
         "required": false,
-        "readOnly": true
-      },
-      {
-        "name": "field15",
-        "type": "line",
-        "position": {
-          "x": 10,
-          "y": 69
-        },
-        "width": 190,
-        "height": 0.75,
-        "rotate": 0,
-        "opacity": 1,
         "readOnly": true,
-        "color": "#000000",
-        "required": false,
-        "content": ""
+        "fontName": "Roboto",
+        "overflow": "visible"
       },
       {
         "name": "field15 copy",
@@ -1055,7 +997,7 @@ export const template: Template = {
         "type": "line",
         "position": {
           "x": 130,
-          "y": 194
+          "y": 203
         },
         "width": 70,
         "height": 0.5,
@@ -1071,10 +1013,10 @@ export const template: Template = {
         "type": "rectangle",
         "position": {
           "x": 10,
-          "y": 52
+          "y": 69.3
         },
-        "width": 190,
-        "height": 225,
+        "width": 189.97,
+        "height": 207.7,
         "rotate": 0,
         "opacity": 1,
         "borderWidth": 1,
@@ -1092,8 +1034,8 @@ export const template: Template = {
           "x": 10,
           "y": 20
         },
-        "width": 190,
-        "height": 30,
+        "width": 189.97,
+        "height": 47.36,
         "rotate": 0,
         "opacity": 1,
         "borderWidth": 1,
@@ -1120,7 +1062,17 @@ export const template: Template = {
         "required": false,
         "content": ""
       }
-    ]],
-    
-    "basePdf":{"width":210,"height":297,"padding":[20,10,20,10]},"pdfmeVersion":"5.5.1"
+    ]
+  ],
+  "basePdf": {
+    "width": 210,
+    "height": 297,
+    "padding": [
+      20,
+      10,
+      20,
+      10
+    ]
+  },
+  "pdfmeVersion": "6.1.11"
 }

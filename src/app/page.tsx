@@ -164,21 +164,19 @@ export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black flex-col">
       <header className='header fixed top-0 left-0 right-0 mb-2 flex w-full max-h-full items-center justify-between pt-5 pb-5 flex-row bg-gray-100 dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 relative'>
-        <div className='padding_left_device'>
+        <div className='padding_left_device'> 
           <a href="https://www.flygsektionen.se/" target="_self" rel="noopener noreferrer">
             <div className='flex flex-row gap-2 items-center'>
               <img
                 src={`${basePath}/images/bevingade_skrovet.svg`}
                 alt=""
-                height="10"
-                className="block dark:hidden"
+                className="image_light"
               />
 
               <img
                 src={`${basePath}/images/bevingade_skrovet_inverted.svg`}
                 alt=""
-                height="10"
-                className="hidden dark:block"
+                className="image_dark"
               />
 
               <p className='flygsektionen_text'>

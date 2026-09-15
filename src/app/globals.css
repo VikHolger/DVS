@@ -19,18 +19,22 @@
     --foreground: #ededed;
     --foreground_blue: #ffffff;
   }
+  .image_light { @apply hidden;}
+} 
+@media (prefers-color-scheme: light) {
+  .image_dark { @apply hidden;}
 }
 
-@media (max-width: 640px) {
+@media (max-width: 800px) {
   .flygsektionen_text { @apply hidden;}
-  .padding_left_device { @apply pl-2;}
-  .padding_right_device { @apply pr-2;}
+  .padding_left_device { @apply pl-5;}
+  .padding_right_device { @apply pr-5;}
   .stack_or_row { @apply flex-col;}
   .bodyMargin {@apply mt-20;}
 }
-@media (min-width: 610px) {
-  .padding_left_device { @apply pl-20;}
-  .padding_right_device { @apply pr-20;}
+@media (min-width: 800px) {
+  .padding_left_device { @apply pl-10;}
+  .padding_right_device { @apply pr-10;}
   .stack_or_row { @apply flex-row;}
   .bodyMargin {@apply mt-40;}
 }
@@ -51,6 +55,15 @@ body {
   border-radius: 15px;
   /* background: linear-gradient(90deg, rgba(8, 175, 64, 0.50) 0%, rgba(139, 255, 228, 0.50) 100%); */
 }
+
+.image_light {
+  height: 50px;
+}
+.image_dark {
+  height: 50px;
+}
+
+
 .padding_left_device {
   @apply flex gap-2 items-center;
 }
