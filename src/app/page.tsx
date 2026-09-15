@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { translations, Language } from '@/local';
 import { budgetManagers } from '@/local/budgetStructure';
 import { generateMyntPDF, generatePrivatePDF } from '@/local/pdfScripts';
+import { dateTime } from '@pdfme/schemas';
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -73,7 +74,7 @@ export default function Home() {
     if (generatedBlob) sharePDF(generatedBlob);
   }
 
-  async function sharePDF(blob: Blob, filename = 'Verifikat.pdf') {
+  async function sharePDF(blob: Blob, filename = `Verifikat_${budgetManager}_${purchaseDate}.pdf`) {
     const file = new File([blob], filename, { type: 'application/pdf' });
 
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
