@@ -308,7 +308,7 @@ export const template: Template = {
         "rotate": 0,
         "alignment": "left",
         "verticalAlignment": "middle",
-        "fontSize": 3,
+        "fontSize": 2.5,
         "lineHeight": 1,
         "characterSpacing": 0,
         "fontColor": "#000000",
