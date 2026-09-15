@@ -1,9 +1,10 @@
 export const en = {
-  // Site text
+  
+  chapter: "The Flight Chapter",
+
   title: "",
   welcome: "YOU look like you want to fill in a verification! Answer the questions below and the verification will be created for you :)",
 
-  //Form
   enterName: "Name & surname",
   
   myntButton: "Mynt verification",

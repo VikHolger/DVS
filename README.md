@@ -24,7 +24,7 @@ Digitala Verifikat system -  Ett enklare sett för sektionens medlemmar att fyll
 - [x] V 0.2
     - [x] Ladda up kvitton
     - [x] Det skapas ett ärende
-- [ ] V 1.0
+- [x] V 1.0
     - [x] Grafisk profil
     - [x] Rättstavning
     - [x] Publicering

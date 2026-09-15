@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "DVS",
-  description: "Digital Verification System",
+  description: "Digitalt system för skapande av verifikationer",
   icons: {
     icon: "./images/icon.svg",
   },

@@ -180,7 +180,7 @@ export default function Home() {
               />
 
               <p className='flygsektionen_text'>
-                Flygsektionens
+                {t.chapter}
               </p>
             </div>
           </a>

@@ -1,9 +1,10 @@
 export const sv = {
-  // Site text
+  
+  chapter: "Flygsektionen",
+
   title: "",
   welcome: "DU ser ut att vilja fylla i ett verifikat! Svara på frågorna nedan så skapas verifikatet åt dig :)",
   
-  //Form
   enterName: "För- & efternamn",
 
   myntButton: "Myntverifikat",
