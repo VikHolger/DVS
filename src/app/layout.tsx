@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "DVS",
   description: "Digital Verification System",
+  icons: {
+    icon: "public/Images/icon.svg",
+  },
 };
 
 export default function RootLayout({

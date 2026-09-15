@@ -12,18 +12,21 @@ const loadFonts = async (): Promise<Font> => {
     // Use absolute URLs for Next.js public folder
     const fontUrl1 = `${basePath}/fonts/Raleway-SemiBoldItalic.ttf`;
     const fontUrl2 = `${basePath}/fonts/FiraCode-Regular.ttf`;
+    const fontUrl3 = `${basePath}/fonts/Arial.ttf`;
     
-    console.log('Loading fonts from:', fontUrl1, fontUrl2);
+    console.log('Loading fonts from:', fontUrl1, fontUrl2, fontUrl3);
     
     const font1Response = await fetch(fontUrl1);
     const font2Response = await fetch(fontUrl2);
+    const font3Response = await fetch(fontUrl3);
     
-    if (!font1Response.ok || !font2Response.ok) {
+    if (!font1Response.ok || !font2Response.ok || !font3Response.ok) {
       throw new Error('Failed to load fonts');
     }
     
     const font1Data = await font1Response.arrayBuffer();
     const font2Data = await font2Response.arrayBuffer();
+    const font3Data = await font3Response.arrayBuffer();
     
     console.log('Fonts loaded successfully');
     
@@ -38,6 +41,9 @@ const loadFonts = async (): Promise<Font> => {
       },
       code: {
         data: font2Data,
+      },
+      arial: {
+        data: font3Data,
       },
     };
   } catch (error) {
@@ -54,8 +60,7 @@ export async function generateMyntPDF(
   ammount: string, 
   numReceipts: string, 
   purchaseDate: string, 
-  budgetManager: string, 
-  projectNum: string, 
+  budgetManager: string,
   descrition: string,
   images: string[] = []
 ): Promise<Blob> {
@@ -74,7 +79,6 @@ export async function generateMyntPDF(
     numReceipts: String(numReceipts || images.length),
     descrition: String(descrition || ''),
     budgetManager: String(budgetManager || ''),
-    projectNum: String(projectNum || ''),
   };
 
   images.forEach((imageData, i) => {
@@ -146,8 +150,7 @@ export async function generatePrivatePDF(
   ammount: string, 
   numReceipts: string, 
   purchaseDate: string, 
-  budgetManager: string, 
-  projectNum: string, 
+  budgetManager: string,
   descrition: string,
   images: string[] = []
 ) : Promise<Blob>  {
@@ -170,7 +173,6 @@ export async function generatePrivatePDF(
     numReceipts: String(numReceipts || images.length),
     descrition: String(descrition || ''),
     budgetManager: String(budgetManager || ''),
-    projectNum: String(projectNum || ''),
   };
 
   // Add one input object per image page

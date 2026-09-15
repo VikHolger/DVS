@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { translations, Language } from '@/local';
-import { budgetManagers, projectsMap } from '@/local/budgetStructure';
+import { budgetManagers } from '@/local/budgetStructure';
 import { generateMyntPDF, generatePrivatePDF } from '@/local/pdfScripts';
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
@@ -25,7 +25,6 @@ export default function Home() {
   const [purchaseDate, setPurchaseDate] = useState(""); 
 
   const [budgetManager, setBudgetManager] = useState("");
-  const [projectNum, setProjectNum] = useState("");
   const [descrition, setDescrition] = useState("");
 
   type UploadedFile = {
@@ -56,9 +55,9 @@ export default function Home() {
       const imageSrcs = uploadedImages.map(img => img.src);
       let blob: Blob;
       if (V_Type == "Mynt") {
-        blob = await generateMyntPDF(V_Type, name, today, myntCard, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, imageSrcs);
+        blob = await generateMyntPDF(V_Type, name, today, myntCard, ammount, numReceipts, purchaseDate, budgetManager, descrition, imageSrcs);
       } else if (V_Type == "Privat") {
-        blob = await generatePrivatePDF(V_Type, name, today, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, projectNum, descrition, imageSrcs);
+        blob = await generatePrivatePDF(V_Type, name, today, bankName, clearing, bankNum, ammount, numReceipts, purchaseDate, budgetManager, descrition, imageSrcs);
       } else {
         throw new Error("Incorrect V_Type");
       }
@@ -165,21 +164,19 @@ export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black flex-col">
       <header className='header fixed top-0 left-0 right-0 mb-2 flex w-full max-h-full items-center justify-between pt-5 pb-5 flex-row bg-gray-100 dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 relative'>
-        <div className='padding_left_device'>
+        <div className='padding_left_device'> 
           <a href="https://www.flygsektionen.se/" target="_self" rel="noopener noreferrer">
             <div className='flex flex-row gap-2 items-center'>
               <img
                 src={`${basePath}/images/bevingade_skrovet.svg`}
                 alt=""
-                height="10"
-                className="block dark:hidden"
+                className="image_light"
               />
 
               <img
                 src={`${basePath}/images/bevingade_skrovet_inverted.svg`}
                 alt=""
-                height="10"
-                className="hidden dark:block"
+                className="image_dark"
               />
 
               <p className='flygsektionen_text'>
@@ -442,24 +439,6 @@ export default function Home() {
                         </option>
                       ))}
                     </select>
-
-                    {budgetManager && budgetManager != "---" && (
-                      <div className='flex flex-col min-w-2/5 self-center items-center p-2'>
-                        <select 
-                          value={projectNum} 
-                          onChange={(e) => setProjectNum(e.target.value)}
-                          className="multi_choice_button max-w-1/2"
-                          //className="px-4 py-2 mt-1 border border-gray-300 rounded bg-white text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
-                        >
-                          <option value="---" hidden>---</option>
-                          {projectsMap.get(budgetManager)?.map((option) => (
-                            <option key={option.value} value={option.value}>
-                              {t[option.labelKey as keyof typeof t]}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    )}
                   </div>
                 </div>
 
