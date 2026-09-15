@@ -39,20 +39,6 @@
   .bodyMargin {@apply mt-40;}
 }
 
-@media (max-width: 640px) {
-  .flygsektionen_text { @apply hidden;}
-  .padding_left_device { @apply pl-2;}
-  .padding_right_device { @apply pr-2;}
-  .stack_or_row { @apply flex-col;}
-  .bodyMargin {@apply mt-20;}
-}
-@media (min-width: 610px) {
-  .padding_left_device { @apply pl-20;}
-  .padding_right_device { @apply pr-20;}
-  .stack_or_row { @apply flex-row;}
-  .bodyMargin {@apply mt-40;}
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
