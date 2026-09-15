@@ -74,7 +74,7 @@ export default function Home() {
     if (generatedBlob) sharePDF(generatedBlob);
   }
 
-  async function sharePDF(blob: Blob, filename = `Verifikat_${budgetManager}_${purchaseDate}.pdf`) {
+  async function sharePDF(blob: Blob, filename = `Verifikat_${budgetManager === "" ? "" : budgetManager + "_"}${date}.pdf`) {
     const file = new File([blob], filename, { type: 'application/pdf' });
 
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
