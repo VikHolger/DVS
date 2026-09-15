@@ -306,7 +306,7 @@ export const template: Template = {
         "width": 187.59,
         "height": 43.39,
         "rotate": 0,
-        "alignment": "left",
+        "alignment": "center",
         "verticalAlignment": "middle",
         "fontSize": 2.5,
         "lineHeight": 1,
