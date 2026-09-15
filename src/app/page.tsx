@@ -204,7 +204,7 @@ export default function Home() {
 
       <main className="bodyMargin pt-5 flex min-h-screen w-full max-w-3xl flex-col self-center items-center px-16 rounded-xl bg-white dark:bg-black border-b border-gray-300 dark:border-gray-700 sm:items-start">
         
-        <p className='self-center'>
+        <p className='self-center text-center'>
           {t.welcome}
         </p>
 
