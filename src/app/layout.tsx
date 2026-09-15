@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "DVS",
   description: "Digital Verification System",
   icons: {
-    icon: "/images/icon.svg",
+    icon: "/DVS/images/icon.svg",
   },
 };
 
