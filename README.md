@@ -26,7 +26,7 @@ Digitala Verifikat system -  Ett enklare sett för sektionens medlemmar att fyll
     - [x] Det skapas ett ärende
 - [ ] V 1.0
     - [x] Grafisk profil
-    - [ ] Rättstavning
+    - [x] Rättstavning
     - [x] Publicering
 
 ## Hur du kan bidra
