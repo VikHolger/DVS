@@ -244,7 +244,6 @@ export const template: Template = {
         "underline": false,
         "required": false,
         "readOnly": false,
-        "fontName": "Roboto",
         "overflow": "visible"
       },
       {
@@ -313,7 +312,7 @@ export const template: Template = {
         "lineHeight": 1,
         "characterSpacing": 0,
         "fontColor": "#000000",
-        "fontName": "Arial",
+        "fontName": "arial",
         "backgroundColor": "",
         "opacity": 1,
         "strikethrough": false,
@@ -707,7 +706,6 @@ export const template: Template = {
         "underline": false,
         "required": false,
         "readOnly": true,
-        "fontName": "Roboto",
         "overflow": "visible"
       },
       {
@@ -781,7 +779,6 @@ export const template: Template = {
         "underline": false,
         "required": false,
         "readOnly": true,
-        "fontName": "Roboto",
         "overflow": "visible"
       },
       {
