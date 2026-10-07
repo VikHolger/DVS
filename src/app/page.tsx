@@ -495,7 +495,7 @@ export default function Home() {
                   )}
               </button>
             ) : descrition && generatedBlob && (
-              <div className="flex flex-col self-center items-center justify-center mt-1 mb-3 py-1 max-md:mt-6 max-md:mb-4">
+              <div className="flex flex-row self-center items-center justify-center mt-1 mb-3 py-1 max-md:mt-6 max-md:mb-4">
                 <button onClick={handleShareClick} className="button_common">
                   {t.sharePDF}
                 </button>
