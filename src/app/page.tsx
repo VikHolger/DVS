@@ -70,6 +70,19 @@ export default function Home() {
     }
   }
 
+  function handleDownloadClick() {
+    if (generatedBlob) {
+      let filename = `Verifikat_${budgetManager === "" ? "" : budgetManager + "_"}${date}.pdf`;
+      
+      const url = URL.createObjectURL(generatedBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  }
+
   function handleShareClick() {
     if (generatedBlob) sharePDF(generatedBlob);
   }
@@ -482,9 +495,15 @@ export default function Home() {
                   )}
               </button>
             ) : descrition && generatedBlob && (
-              <button onClick={handleShareClick} className="button_common mt-1 mb-3">
-                {t.sharePDF}
-              </button>
+              <div className="flex flex-col self-center items-center justify-center mt-1 mb-3 py-1 max-md:mt-6 max-md:mb-4">
+                <button onClick={handleShareClick} className="button_common">
+                  {t.sharePDF}
+                </button>
+
+                <button onClick={handleDownloadClick} className="button_common">
+                  {t.downloadPDF}
+                </button>
+              </div>
             )}
         </div>
       </main>

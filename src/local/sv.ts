@@ -36,4 +36,5 @@ export const sv = {
   generate: "Generererererera PDF",
   generating: "Generererererar...",
   sharePDF: "Dela PDF",
+  downloadPDF: "Ladda ner PDF",
 };

@@ -36,4 +36,5 @@ export const en = {
   generating: "Generererererating...",
   generate: "Genererererererate PDF",
   sharePDF: "Share PDF",
+  downloadPDF: "Download PDF",
 };
